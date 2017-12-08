@@ -1,4 +1,4 @@
 library(testthat)
-library(gcal)
+library(gcalendr)
 
-test_check("gcal")
+test_check("gcalendr")

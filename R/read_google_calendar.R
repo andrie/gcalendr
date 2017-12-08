@@ -7,7 +7,8 @@
 #
 # library(memoise)
 
-GET <- memoise(httr::GET)
+
+# GET <- memoise(httr::GET)
 
 #' Get google token for authentication.
 #'
@@ -60,16 +61,17 @@ utils::globalVariables(c("attendee_count", "internal_count"))
 #' @family gcal functions
 #' @export
 get_gcal_events <- function(id, google_token, max_results = 100, days_in_past = 90, days_in_future = 90){
-  message("Reading calendar", id)
+  message("Reading calendar ", id)
   time_min <- Sys.time() - days_in_past * 24 * 3600
   time_max <- Sys.time() + days_in_future * 24 * 3600
 
-  time_min <- strftime(time_min, tz = "UTC", "%Y-%m-%dT%H:%00%00Z")
-  time_max <- strftime(time_max, tz = "UTC", "%Y-%m-%dT%H:%00%00Z")
+  time_min <- strftime(time_min, tz = "UTC", "%Y-%m-%dT%H:%M:00Z")
+  time_max <- strftime(time_max, tz = "UTC", "%Y-%m-%dT%H:%M:00Z")
 
+  api = "https://www.googleapis.com/calendar/v3/calendars"
   url <- sprintf(
-    'https://www.googleapis.com/calendar/v3/calendars/%s/events?maxResults=%d&timeMin=%s&timeMax=%s&orderBy=startTime&singleEvents=true',
-    id, max_results, time_min, time_max
+    "%s/%s/events?maxResults=%d&timeMin=%s&timeMax=%s&orderBy=startTime&singleEvents=true",
+    api, id, max_results, time_min, time_max
   )
   r <- GET(url, config(token = google_token))
 
