@@ -4,7 +4,14 @@
 \name{gcalendr}
 \alias{gcalendr}
 \alias{gcalendr-package}
-\title{gcal.}
+\title{gcalendr}
 \description{
-gcal.
+Important functions:
+}
+\details{
+\itemize{
+\item \code{\link[=get_google_token]{get_google_token()}}
+\item \code{\link[=get_gcal_list]{get_gcal_list()}}
+\item \code{\link[=get_gcal_events]{get_gcal_events()}}
+}
 }

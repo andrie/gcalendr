@@ -1,30 +1,4 @@
-# Set Environment ----
-
-# library(httr)
-# library(dplyr)
-# library(purrr)
-# library(rlang)
-#
-# library(memoise)
-
-
 # GET <- memoise(httr::GET)
-
-#' Get google token for authentication.
-#'
-#' @family gcal functions
-#' @export
-get_google_token <- function(){
-  google_app <- oauth_app(
-    'GOOGLE_APIS',
-    key = "115354746897-98g2v3hvasb4q1p0p4adp37ophpqqo7l.apps.googleusercontent.com",
-    secret = "0qh9MxOXWzaKIX016Jv_mVqQ"
-  )
-  google_token <- oauth2.0_token(
-    oauth_endpoints('google'), google_app,
-    scope = 'https://www.googleapis.com/auth/calendar.readonly'
-  )
-}
 
 
 #' Get list of calendars from google.
@@ -38,14 +12,52 @@ get_gcal_list <- function(google_token){
   r <- GET("https://www.googleapis.com/calendar/v3/users/me/calendarList",
            config(token = google_token))
 
+  r <- content(r)
+
+  # `%||%` <- function(lhs, rhs){
+  #   if_else (!is.null(lhs), lhs, rhs )
+  # }
+
+  null_to_na <- function(x){
+    ifelse(is.null(x), NA, x)
+  }
+
   r %>%
-    content() %>%
     pluck("items") %>%
-    map_chr("id")
+    map_dfr(
+      ~list(
+        id = .[["id"]],
+        summary = .[["summary"]],
+        description = .[["description"]]  %>% null_to_na()
+        )
+      )
+
 }
 
 
+# declare variables for R CMD check
 utils::globalVariables(c("attendee_count", "internal_count"))
+
+
+embedded_lists <- function(x){
+  el <- x %>% map_lgl(is.list)
+  el[el] %>% names()
+}
+
+rename_embedded_lists <- function(x){
+  el <- embedded_lists(x)
+  x[el] <- lapply(seq_along(el), function(i){
+    el_i_name <- names(x[el][i])
+    this <- x[el][[i]]
+    names(this) <- paste(el_i_name, names(this), sep = "_")
+    this
+  })
+  x
+}
+
+squash_without_warning <- function(x)suppressWarnings(squash(x))
+
+
 
 
 #' Read list of google calendar events.
@@ -60,7 +72,7 @@ utils::globalVariables(c("attendee_count", "internal_count"))
 #' @references https://developers.google.com/google-apps/calendar/v3/reference/events/list
 #' @family gcal functions
 #' @export
-get_gcal_events <- function(id, google_token, max_results = 100, days_in_past = 90, days_in_future = 90){
+get_gcal_events <- function(id, google_token, max_results = 250, days_in_past = 90, days_in_future = 90){
   message("Reading calendar ", id)
   time_min <- Sys.time() - days_in_past * 24 * 3600
   time_max <- Sys.time() + days_in_future * 24 * 3600
@@ -74,8 +86,10 @@ get_gcal_events <- function(id, google_token, max_results = 100, days_in_past = 
     api, id, max_results, time_min, time_max
   )
   r <- GET(url, config(token = google_token))
+  r <- content(r)
 
-  events <- r %>% content() %>% pluck("items")
+  items <- r$items
+
 
   # If there's more than one page of results
   # while (!is.null(content(req)$nextPageToken)) {
@@ -91,13 +105,14 @@ get_gcal_events <- function(id, google_token, max_results = 100, days_in_past = 
   #   events_list_all <- append(events_list_all, events_list)
   # }
 
-  events %>%
-    map_df(~suppressWarnings(squash(.))) %>%
-    bind_rows()
+  items %>%
+    map(rename_embedded_lists) %>%
+    map_dfr(squash_without_warning)
+
 }
 
 
-
+# declare variables for R CMD check
 utils::globalVariables(c("date", "dateTime", "summary", "description", "attendees"))
 utils::globalVariables(c("attendee_count", "internal_count"))
 

@@ -4,13 +4,13 @@
 \alias{get_gcal_events}
 \title{Read list of google calendar events.}
 \usage{
-get_gcal_events(id, google_token, max_results = 100, days_in_past = 90,
+get_gcal_events(id, google_token, max_results = 250, days_in_past = 90,
   days_in_future = 90)
 }
 \arguments{
-\item{id}{calendar id, obtained from [get_gcal_list()]}
+\item{id}{calendar id, obtained from \code{\link[=get_gcal_list]{get_gcal_list()}}}
 
-\item{google_token}{token obtained from [get_google_token]}
+\item{google_token}{token obtained from \link{get_google_token}}
 
 \item{max_results}{Maximum number of results retrieved per query}
 

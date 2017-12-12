@@ -7,7 +7,7 @@
 get_gcal_list(google_token)
 }
 \arguments{
-\item{google_token}{token obtained from [get_google_token]}
+\item{google_token}{token obtained from \link{get_google_token}}
 }
 \value{
 character vector with calendar ids
