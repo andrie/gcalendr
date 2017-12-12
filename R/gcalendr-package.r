@@ -14,6 +14,6 @@
 #' @importFrom rlang flatten squash
 #' @importFrom dplyr '%>%' bind_cols select mutate if_else bind_rows one_of
 # @importFrom memoise memoise
-#' @importFrom lubridate date
+#' @importFrom lubridate as_date as_datetime
 #'
 NULL

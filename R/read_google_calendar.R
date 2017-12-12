@@ -58,6 +58,7 @@ rename_embedded_lists <- function(x){
 squash_without_warning <- function(x)suppressWarnings(squash(x))
 
 
+utils::globalVariables(c("created", "updated", "start_date", "end_date", "end_dateTime", "start_dateTime"))
 
 
 #' Read list of google calendar events.
@@ -105,9 +106,20 @@ get_gcal_events <- function(id, google_token, max_results = 250, days_in_past = 
   #   events_list_all <- append(events_list_all, events_list)
   # }
 
-  items %>%
+  events <- items %>%
     map(rename_embedded_lists) %>%
     map_dfr(squash_without_warning)
+
+  events %>%
+    mutate(
+      created = as_datetime(created),
+      updated = as_datetime(updated),
+      start_date = as_date(start_date),
+      end_date = as_date(end_date),
+      start_dateTime = as_datetime(start_dateTime),
+      end_dateTime = as_datetime(end_dateTime)
+    )
+
 
 }
 
