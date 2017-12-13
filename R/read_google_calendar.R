@@ -58,7 +58,7 @@ rename_embedded_lists <- function(x){
 squash_without_warning <- function(x)suppressWarnings(squash(x))
 
 
-utils::globalVariables(c("created", "updated", "start_date", "end_date", "end_dateTime", "start_dateTime"))
+utils::globalVariables(c(".", "created", "updated", "start_date", "end_date", "end_dateTime", "start_dateTime"))
 
 
 #' Read list of google calendar events.
@@ -92,23 +92,38 @@ get_gcal_events <- function(id, google_token, max_results = 250, days_in_past = 
   items <- r$items
 
 
-  # If there's more than one page of results
-  # while (!is.null(content(req)$nextPageToken)) {
-  #   req <- GET(paste0('https://www.googleapis.com/calendar/v3/calendars/',
-  #                     cals[i], '/events?maxResults=2500&orderBy=startTime&',
-  #                     'singleEvents=true&pageToken=',
-  #                     content(req)$nextPageToken),
-  #              config(token = google_token))
-  #   events_list <- lapply(content(req)$items,
-  #                         function (x) {
-  #                           x[['calendar']] <- cals[i]
-  #                           x})
-  #   events_list_all <- append(events_list_all, events_list)
-  # }
+  # Retrieve more results if necessary
 
-  events <- items %>%
-    map(rename_embedded_lists) %>%
-    map_dfr(squash_without_warning)
+  retrieved_more <- FALSE
+  while (!is.null(r[["nextPageToken"]])) {
+    retrieved_more <- TRUE
+    message(".", appendLF = FALSE)
+    new_url <- sprintf("%s&pageToken=%s", url, r[["nextPageToken"]])
+    r <- GET(new_url, config(token = google_token))
+    r <- content(r)
+    new_items <- r$items
+    items <- append(items, new_items)
+  }
+  if (retrieved_more) message()
+
+
+  drop_attendees <- function(x){
+    x %>%
+      discard(., ~vec_depth(.) == 3) %>%
+      rename_embedded_lists() %>% squash_without_warning()
+  }
+  keep_attendees <- function(x){
+    att <- x %>% pluck("attendees") %>% map_dfr(., flatten)
+    bind_cols(id = rep(x$id, nrow(att)), att)
+  }
+
+  events <- left_join(
+    items %>% map_dfr(drop_attendees) %>% bind_rows(),
+    items %>% map_dfr(keep_attendees) %>%
+      group_by(id) %>%
+      nest(.key = "attendees"),
+    by = "id"
+  )
 
   events %>%
     mutate(
@@ -119,6 +134,7 @@ get_gcal_events <- function(id, google_token, max_results = 250, days_in_past = 
       start_dateTime = as_datetime(start_dateTime),
       end_dateTime = as_datetime(end_dateTime)
     )
+
 
 
 }

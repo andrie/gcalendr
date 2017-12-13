@@ -1,11 +1,10 @@
 Package: gcalendr
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Read Events From Google Calendar
 Version: 0.0.1.9000
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
+Authors@R: c(person("Andrie", "de Vries", role=c("aut", "cre"), email="apdevries@gmail.com"))
+Description: Read events from the Google Calendar API.
+Date: 2017-12-13
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
@@ -21,6 +20,7 @@ Imports:
     purrr,
     httr,
     dplyr,
-    lubridate
+    lubridate,
+    tidyr
 RoxygenNote: 6.0.1
 Roxygen: list(markdown = TRUE)
