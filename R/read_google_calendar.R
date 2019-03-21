@@ -127,16 +127,17 @@ get_gcal_events <- function(id, google_token, max_results = 250, days_in_past = 
 
   events %>%
     mutate(
-      created = as_datetime(created),
-      updated = as_datetime(updated),
-      start_date = if ("start_date" %in% names(.)) as_date(start_date) else as_date(NA),
-      end_date = if ("end_date" %in% names(.)) as_date(end_date) else as_date(NA),
+      created = transform_or_na(., "created", as_datetime),
+      updated = transform_or_na(., "updated", as_datetime),
+      start_date = transform_or_na(., "start_date"),
+      end_date = transform_or_na(., "end_date"),
       start_dateTime = as_datetime(start_dateTime),
       end_dateTime = as_datetime(end_dateTime)
     )
+}
 
-
-
+transform_or_na <- function(df, varname, fn = as_date) {
+  if (varname %in% names(df)) df %>% pull(!!varname) %>% fn() else fn(NA)
 }
 
 
