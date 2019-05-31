@@ -1,10 +1,10 @@
 Package: gcalendr
 Type: Package
 Title: Read Events From Google Calendar
-Version: 0.0.1.9001
+Version: 0.0.2.9001
 Authors@R: c(person("Andrie", "de Vries", role=c("aut", "cre"), email="apdevries@gmail.com"))
 Description: Read events from the Google Calendar API.
-Date: 2017-12-13
+Date: 2019-05-30
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true

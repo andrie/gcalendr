@@ -121,7 +121,8 @@ get_gcal_events <- function(id, google_token, max_results = 250, days_in_past = 
     items %>% map_dfr(drop_attendees) %>% bind_rows(),
     items %>% map_dfr(keep_attendees) %>%
       group_by(id) %>%
-      nest(.key = "attendees"),
+      nest() %>%
+      dplyr::rename(attendees = "data"),
     by = "id"
   )
 
@@ -137,7 +138,7 @@ get_gcal_events <- function(id, google_token, max_results = 250, days_in_past = 
 }
 
 transform_or_na <- function(df, varname, fn = as_date) {
-  if (varname %in% names(df)) df %>% pull(!!varname) %>% fn() else fn(NA)
+  if (varname %in% names(df)) df %>% dplyr::pull(!!varname) %>% fn() else fn(NA)
 }
 
 

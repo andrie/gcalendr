@@ -16,3 +16,4 @@ Get google token for authentication.
 Other gcal functions: \code{\link{get_gcal_events}},
   \code{\link{get_gcal_list}}
 }
+\concept{gcal functions}

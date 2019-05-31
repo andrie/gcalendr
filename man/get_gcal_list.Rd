@@ -19,3 +19,4 @@ Get list of calendars from google.
 Other gcal functions: \code{\link{get_gcal_events}},
   \code{\link{get_google_token}}
 }
+\concept{gcal functions}

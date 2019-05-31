@@ -28,3 +28,4 @@ https://developers.google.com/google-apps/calendar/v3/reference/events/list
 Other gcal functions: \code{\link{get_gcal_list}},
   \code{\link{get_google_token}}
 }
+\concept{gcal functions}
