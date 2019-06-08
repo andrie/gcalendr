@@ -52,6 +52,9 @@ stop_glue <- function (..., .sep = "", .envir = parent.frame(), call. = FALSE,
 #' @export
 #' @family low-level API functions
 #' @seealso [gargle::request_develop()], [gargle::request_build()]
+#'
+#' @importFrom rlang "%||%"
+#'
 #' @examples
 #' \dontrun{
 #' req <- generate_request(
