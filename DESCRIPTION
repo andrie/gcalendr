@@ -8,19 +8,21 @@ Date: 2019-05-30
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
-Suggests:
-    rmarkdown,
-    knitr,
-    testthat,
+Suggests: 
     covr,
+    httptest,
+    knitr,
+    rmarkdown,
+    testthat (>= 2.1.0),
     withr
 VignetteBuilder: rmarkdown
-Imports:
+Imports: 
     rlang,
     purrr,
     httr,
     dplyr,
     lubridate,
-    tidyr
+    tidyr,
+    gargle
 RoxygenNote: 6.1.1
 Roxygen: list(markdown = TRUE)

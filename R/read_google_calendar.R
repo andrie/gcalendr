@@ -61,32 +61,16 @@ squash_without_warning <- function(x)suppressWarnings(squash(x))
 utils::globalVariables(c(".", "created", "updated", "start_date", "end_date", "end_dateTime", "start_dateTime"))
 
 
-#' Read list of google calendar events.
-#'
-#' @inheritParams get_gcal_list
-#'
-#' @param id calendar id, obtained from [get_gcal_list()]
-#' @param max_results Maximum number of results retrieved per query
-#' @param days_in_past Restrict results to date range, number of days in past
-#' @param days_in_future Restrict results to date range, number of days into future
-#'
-#' @references https://developers.google.com/google-apps/calendar/v3/reference/events/list
-#' @family gcal functions
-#' @export
-get_gcal_events <- function(id, google_token, max_results = 250, days_in_past = 90, days_in_future = 90){
-  message("Reading calendar ", id)
-  time_min <- Sys.time() - days_in_past * 24 * 3600
-  time_max <- Sys.time() + days_in_future * 24 * 3600
-
+call_gcal_api <- function(id, google_token, time_min, time_max, max_results = 250){
+  api = "https://www.googleapis.com/calendar/v3/calendars"
   time_min <- strftime(time_min, tz = "UTC", "%Y-%m-%dT%H:%M:00Z")
   time_max <- strftime(time_max, tz = "UTC", "%Y-%m-%dT%H:%M:00Z")
-
-  api = "https://www.googleapis.com/calendar/v3/calendars"
   url <- sprintf(
     "%s/%s/events?maxResults=%d&timeMin=%s&timeMax=%s&orderBy=startTime&singleEvents=true",
     api, id, max_results, time_min, time_max
   )
   r <- GET(url, config(token = google_token))
+  httr::stop_for_status(r)
   r <- content(r)
 
   items <- r$items
@@ -100,12 +84,40 @@ get_gcal_events <- function(id, google_token, max_results = 250, days_in_past = 
     message(".", appendLF = FALSE)
     new_url <- sprintf("%s&pageToken=%s", url, r[["nextPageToken"]])
     r <- GET(new_url, config(token = google_token))
+    httr::stop_for_status(r)
     r <- content(r)
     new_items <- r$items
     items <- append(items, new_items)
   }
-  if (retrieved_more) message()
+  items
+}
 
+
+#' Read list of google calendar events.
+#'
+#' @inheritParams get_gcal_list
+#'
+#' @param id calendar id, obtained from [get_gcal_list()]
+#' @param days_in_past Restrict results to date range, number of days in past
+#' @param days_in_future Restrict results to date range, number of days into future
+#' @param now Reference time stamp, defaulting to [Sys.time()]
+#' @param max_results Maximum number of results retrieved per query
+#'
+#' @references https://developers.google.com/google-apps/calendar/v3/reference/events/list
+#' @family gcal functions
+#' @export
+get_gcal_events <- function(id, google_token, days_in_past = 90, days_in_future = 90, now = Sys.time(), max_results = 250){
+  message("Reading calendar ", id)
+  time_min <- now - days_in_past * 24 * 3600
+  time_max <- now + days_in_future * 24 * 3600
+
+  items <- call_gcal_api(
+    id = id,
+    google_token = google_token,
+    time_min = time_min,
+    time_max = time_max,
+    max_results = max_results
+  )
 
   drop_attendees <- function(x){
     x %>%
@@ -128,12 +140,12 @@ get_gcal_events <- function(id, google_token, max_results = 250, days_in_past = 
 
   events %>%
     mutate(
-      created = transform_or_na(., "created", as_datetime),
-      updated = transform_or_na(., "updated", as_datetime),
-      start_date = transform_or_na(., "start_date"),
-      end_date = transform_or_na(., "end_date"),
-      start_dateTime = as_datetime(start_dateTime),
-      end_dateTime = as_datetime(end_dateTime)
+      created        = transform_or_na(., "created", as_datetime),
+      updated        = transform_or_na(., "updated", as_datetime),
+      start_date     = transform_or_na(., "start_date"),
+      end_date       = transform_or_na(., "end_date"),
+      start_dateTime = transform_or_na(., "start_dateTime", as_datetime),
+      end_dateTime   = transform_or_na(., "end_dateTime", as_datetime)
     )
 }
 

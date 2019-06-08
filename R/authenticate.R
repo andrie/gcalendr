@@ -18,3 +18,16 @@ get_google_token <- function(google_app){
     scope = 'https://www.googleapis.com/auth/calendar.readonly'
   )
 }
+
+
+options(gargle_quiet = FALSE)
+get_google_token <- function(email = NULL, google_app = NULL){
+  if (missing(google_app) || is.null(google_app)) {
+    google_app <- rstudio_app
+  }
+  gargle::token_fetch(
+    scopes = 'https://www.googleapis.com/auth/calendar.readonly',
+    app = google_app,
+    email = email
+  )
+}
