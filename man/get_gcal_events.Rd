@@ -4,19 +4,21 @@
 \alias{get_gcal_events}
 \title{Read list of google calendar events.}
 \usage{
-get_gcal_events(id, google_token, max_results = 250, days_in_past = 90,
-  days_in_future = 90)
+get_gcal_events(id, google_token, days_in_past = 90,
+  days_in_future = 90, now = Sys.time(), max_results = 250)
 }
 \arguments{
 \item{id}{calendar id, obtained from \code{\link[=get_gcal_list]{get_gcal_list()}}}
 
 \item{google_token}{token obtained from \link{get_google_token}}
 
-\item{max_results}{Maximum number of results retrieved per query}
-
 \item{days_in_past}{Restrict results to date range, number of days in past}
 
 \item{days_in_future}{Restrict results to date range, number of days into future}
+
+\item{now}{Reference time stamp, defaulting to \code{\link[=Sys.time]{Sys.time()}}}
+
+\item{max_results}{Maximum number of results retrieved per query}
 }
 \description{
 Read list of google calendar events.

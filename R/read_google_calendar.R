@@ -3,20 +3,17 @@
 
 #' Get list of calendars from google.
 #'
-#' @param google_token token obtained from [get_google_token]
+#' @param token token obtained from [get_google_token]
 #'
 #' @return character vector with calendar ids
 #' @family gcal functions
 #' @export
-get_gcal_list <- function(google_token){
-  r <- GET("https://www.googleapis.com/calendar/v3/users/me/calendarList",
-           config(token = google_token))
+get_gcal_list <- function(token){
 
+  req <- generate_request("calendar.calendarList.list", token = token)
+  r <- request_make(req)
+  httr::stop_for_status(r)
   r <- content(r)
-
-  # `%||%` <- function(lhs, rhs){
-  #   if_else (!is.null(lhs), lhs, rhs )
-  # }
 
   null_to_na <- function(x){
     ifelse(is.null(x), NA, x)

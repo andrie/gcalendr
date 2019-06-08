@@ -4,7 +4,7 @@
 \alias{get_google_token}
 \title{Get google token for authentication.}
 \usage{
-get_google_token(google_app)
+get_google_token(email = NULL, google_app = NULL)
 }
 \arguments{
 \item{google_app}{A valid oauth app, e.g. as provided by \link[httr:oauth_app]{httr::oauth_app}.  Defaults to an app that will ask for permission to view your google calendars.  You can use the built-in app, or create your own.}
