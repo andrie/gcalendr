@@ -4,3 +4,8 @@ client_id.json
 .httr-oauth
 ^README\.Rmd$
 ^README-.*\.png$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
+^data-raw$
+logo.svg
