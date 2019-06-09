@@ -159,7 +159,25 @@ currently configured API key and OAuth app, respectively.</p>
 <span class='fu'>gcalendr_api_key</span>()
 
 <span class='fu'>gcalendr_oauth_app</span>()</pre>
-        
+    
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>app</th>
+      <td><p>OAuth app. Defaults to a tidyverse app.</p></td>
+    </tr>
+    <tr>
+      <th>path</th>
+      <td><p>Path to the JSON file.</p></td>
+    </tr>
+    <tr>
+      <th>api_key</th>
+      <td><p>API key. Defaults to a tidyverse key. Necessary in
+order to make unauthorized "token-free" requests for public resources.</p></td>
+    </tr>
+    </table>
+    
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p><code>gcalendr_auth_config()</code>: An object of R6 class <code>AuthState</code>,
@@ -191,17 +209,25 @@ current API key. <code>gcalendr_oauth_app()</code>: the current
   )
   <span class='no'>google_key</span> <span class='kw'>&lt;-</span> <span class='st'>"the-key-I-got-for-a-google-API"</span>
   <span class='fu'>gcalendr_auth_config</span>(<span class='kw'>app</span> <span class='kw'>=</span> <span class='no'>google_app</span>, <span class='kw'>api_key</span> <span class='kw'>=</span> <span class='no'>google_key</span>)
-}</div><div class='output co'>#&gt; <span class='message'>Loading required package: httr</span></div><div class='output co'>#&gt; <span class='error'>Error in is_string(api_key): could not find function "is_string"</span></div><div class='input'>
+}</div><div class='output co'>#&gt; <span class='message'>Loading required package: httr</span></div><div class='output co'>#&gt; &lt;AuthState (via gargle)&gt;
+#&gt;          &lt;package&gt; gcalendr
+#&gt;              &lt;app&gt; my-awesome-google-api-wrapping-package
+#&gt;          &lt;api_key&gt; the-key...
+#&gt;      &lt;auth_active&gt; TRUE
+#&gt;      &lt;credentials&gt; NULL
+#&gt; ---</div><div class='input'>
 </div><span class='co'># NOT RUN {</span>
 <span class='co'>## bring your own app via JSON downloaded from Google Developers Console</span>
 <span class='fu'>gcalendr_auth_config</span>(
   <span class='kw'>path</span> <span class='kw'>=</span> <span class='st'>"/path/to/the/JSON/you/downloaded/from/google/dev/console.json"</span>
 )
-<span class='co'># }</span></pre>
+<span class='co'># }</span><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
+      <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
 

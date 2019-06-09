@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Produce configured token — gcalendr_token • gcalendr</title>
+<title>Build a request for the Google Calendar API — request_generate • gcalendr</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -37,15 +37,22 @@
 
 
 
-<meta property="og:title" content="Produce configured token — gcalendr_token" />
+<meta property="og:title" content="Build a request for the Google Calendar API — request_generate" />
 
-<meta property="og:description" content="For internal use or for those programming around the Calendar API.
-Returns a token pre-processed with httr::config(). Most users
-do not need to handle tokens &quot;by hand&quot; or, even if they need some
-control, gcalendr_auth() is what they need. If there is no current
-token, gcalendr_auth() is called to either load from cache or
-initiate OAuth2.0 flow. If auth has been deactivated via
-gcalendr_auth_config(), gcalendr_token() returns NULL." />
+<meta property="og:description" content="Build a request, using knowledge of the Calendar v3 API from its
+Discovery Document.
+Most users should, instead, use higher-level wrappers that facilitate
+common tasks, such as reading calendar lists or calendar entries. The
+functions here are intended for internal use and for programming around the
+Calendar API.
+request_generate() lets you provide the bare minimum of input.
+It takes a nickname for an endpoint and:
+Uses the API spec to look up the path, method, and base URL.
+Checks params for validity and completeness with respect to the
+endpoint. Separates parameters into those destined for the body, the query,
+and URL endpoint substitution (which is also enacted).
+Adds an API key to the query if and only if token = NULL.
+" />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -109,40 +116,71 @@ gcalendr_auth_config(), gcalendr_token() returns NULL." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Produce configured token</h1>
+    <h1>Build a request for the Google Calendar API</h1>
     
-    <div class="hidden name"><code>gcalendr_token.Rd</code></div>
+    <div class="hidden name"><code>request_generate.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>For internal use or for those programming around the Calendar API.
-Returns a token pre-processed with <code><a href='https://www.rdocumentation.org/packages/httr/topics/config'>httr::config()</a></code>. Most users
-do not need to handle tokens "by hand" or, even if they need some
-control, <code><a href='gcalendr_auth.html'>gcalendr_auth()</a></code> is what they need. If there is no current
-token, <code><a href='gcalendr_auth.html'>gcalendr_auth()</a></code> is called to either load from cache or
-initiate OAuth2.0 flow. If auth has been deactivated via
-<code><a href='gcalendr_auth_config.html'>gcalendr_auth_config()</a></code>, <code>gcalendr_token()</code> returns <code>NULL</code>.</p>
+    <p>Build a request, using knowledge of the <a href='https://developers.google.com/calendar/v3/reference/'>Calendar v3 API</a> from its
+<a href='https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest'>Discovery Document</a>.
+Most users should, instead, use higher-level wrappers that facilitate
+common tasks, such as reading calendar lists or calendar entries. The
+functions here are intended for internal use and for programming around the
+Calendar API.</p>
+<p><code>request_generate()</code> lets you provide the bare minimum of input.
+It takes a nickname for an endpoint and:</p><ul>
+<li><p>Uses the API spec to look up the <code>path</code>, <code>method</code>, and base URL.</p></li>
+<li><p>Checks <code>params</code> for validity and completeness with respect to the
+endpoint. Separates parameters into those destined for the body, the query,
+and URL endpoint substitution (which is also enacted).</p></li>
+<li><p>Adds an API key to the query if and only if <code>token = NULL</code>.</p></li>
+</ul>
     
     </div>
 
-    <pre class="usage"><span class='fu'>gcalendr_token</span>()</pre>
-        
+    <pre class="usage"><span class='fu'>request_generate</span>(<span class='kw'>endpoint</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a></span>(), <span class='kw'>params</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(),
+  <span class='kw'>token</span> <span class='kw'>=</span> <span class='fu'><a href='gcalendr_token.html'>gcalendr_token</a></span>())</pre>
+    
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>endpoint</th>
+      <td><p>Character. Nickname for one of the selected Calendar v3 API
+endpoints built into <code>gcalendr</code>. Learn more in <code><a href='gcalendr_endpoints.html'>gcalendr_endpoints()</a></code>.</p></td>
+    </tr>
+    <tr>
+      <th>params</th>
+      <td><p>Named list. Parameters destined for endpoint URL substitution,
+the query, or the body.</p></td>
+    </tr>
+    <tr>
+      <th>token</th>
+      <td><p>Calendar token. Set to <code>NULL</code> to suppress the inclusion of a token.
+Note that, if auth has been de-activated via <code><a href='gcalendr_auth_config.html'>gcalendr_auth_config()</a></code>,
+<code><a href='gcalendr_token.html'>gcalendr_token()</a></code> will actually return <code>NULL</code>.</p></td>
+    </tr>
+    </table>
+    
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A <code>request</code> object (an S3 class provided by <a href='https://www.rdocumentation.org/packages/httr/topics/httr-package'>httr</a>).</p>
+    <p><code><a href='https://www.rdocumentation.org/packages/base/topics/list'>list()</a></code><br /> Components are <code>method</code>, <code>path</code>, <code>query</code>, <code>body</code>,
+<code>token</code>, and <code>url</code>, suitable as input for <code>request_make()</code>.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other low-level API functions: <code><a href='request_generate.html'>request_generate</a></code></p></div>
+    <div class='dont-index'><p><code><a href='https://gargle.r-lib.org/reference/request_develop.html'>gargle::request_develop()</a></code>, <code><a href='https://gargle.r-lib.org/reference/request_develop.html'>gargle::request_build()</a></code></p>
+<p>Other low-level API functions: <code><a href='gcalendr_token.html'>gcalendr_token</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='no'>req</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='request_generate.html'>request_generate</a></span>(
+<span class='no'>req</span> <span class='kw'>&lt;-</span> <span class='fu'>request_generate</span>(
   <span class='st'>"drive.files.get"</span>,
   <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>fileId</span> <span class='kw'>=</span> <span class='st'>"abc"</span>),
-  <span class='kw'>token</span> <span class='kw'>=</span> <span class='fu'>gcalendr_token</span>()
+  <span class='kw'>token</span> <span class='kw'>=</span> <span class='fu'><a href='gcalendr_token.html'>gcalendr_token</a></span>()
 )
 <span class='no'>req</span>
 <span class='co'># }</span></pre>
@@ -150,6 +188,7 @@ initiate OAuth2.0 flow. If auth has been deactivated via
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
+      <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
 
