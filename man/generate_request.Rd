@@ -61,5 +61,7 @@ req
 }
 \seealso{
 \code{\link[gargle:request_develop]{gargle::request_develop()}}, \code{\link[gargle:request_build]{gargle::request_build()}}
+
+Other low-level API functions: \code{\link{gcalendr_token}}
 }
 \concept{low-level API functions}

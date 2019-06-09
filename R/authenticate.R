@@ -1,8 +1,3 @@
-rstudio_app <- oauth_app(
-  'GOOGLE_APIS',
-  key = "115354746897-98g2v3hvasb4q1p0p4adp37ophpqqo7l.apps.googleusercontent.com",
-  secret = "0qh9MxOXWzaKIX016Jv_mVqQ"
-)
 
 #' Get google token for authentication.
 #'
@@ -11,7 +6,7 @@ rstudio_app <- oauth_app(
 #' @export
 get_google_token <- function(google_app){
   if (missing(google_app) || is.null(google_app)) {
-    google_app <- rstudio_app
+    google_app <- gcalendr_app
   }
   google_token <- oauth2.0_token(
     oauth_endpoints('google'), google_app,
@@ -23,7 +18,7 @@ get_google_token <- function(google_app){
 options(gargle_quiet = FALSE)
 get_google_token <- function(email = NULL, google_app = NULL){
   if (missing(google_app) || is.null(google_app)) {
-    google_app <- rstudio_app
+    google_app <- gcalendr_app
   }
   gargle::token_fetch(
     scopes = 'https://www.googleapis.com/auth/calendar.readonly',
