@@ -7,9 +7,9 @@
 #'
 #' @importFrom gargle request_make
 #' @export
-get_gcal_list <- function(token){
+get_gcal_list <- function(token = gcalendr_token()){
 
-  req <- generate_request("calendar.calendarList.list", token = token)
+  req <- request_generate("calendar.calendarList.list", token = token)
   r <- request_make(req)
   httr::stop_for_status(r)
   r <- content(r)

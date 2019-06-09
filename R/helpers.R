@@ -29,6 +29,10 @@ squash_without_warning <- function(x)suppressWarnings(squash(x))
 utils::globalVariables(c(".", "created", "updated", "start_date", "end_date", "end_dateTime", "start_dateTime"))
 
 
+pull_or_na <- function(df, varname, fn = as_date) {
+  if (varname %in% names(df)) df %>% dplyr::pull(!!varname) else NA
+}
+
 
 transform_or_na <- function(df, varname, fn = as_date) {
   if (varname %in% names(df)) df %>% dplyr::pull(!!varname) %>% fn() else fn(NA)

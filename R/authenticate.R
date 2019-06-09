@@ -1,28 +1,13 @@
-
-#' Get google token for authentication.
+#' Defunct.
 #'
-#' @param google_app A valid oauth app, e.g. as provided by [httr::oauth_app].  Defaults to an app that will ask for permission to view your google calendars.  You can use the built-in app, or create your own.
-#' @family gcal functions
+#' Please use [gcalendr_auth()] and [gcalendr_token()] instead.
+#'
+#' @param google_app No longer used
+#' @rdname gcalendr-defunct
 #' @export
 get_google_token <- function(google_app){
-  if (missing(google_app) || is.null(google_app)) {
-    google_app <- gcalendr_app
-  }
-  google_token <- oauth2.0_token(
-    oauth_endpoints('google'), google_app,
-    scope = 'https://www.googleapis.com/auth/calendar.readonly'
-  )
-}
+  .Defunct("gcalendr_token", package = "gcalendr")
 
+  gcalendr_token()
 
-options(gargle_quiet = FALSE)
-get_google_token <- function(email = NULL, google_app = NULL){
-  if (missing(google_app) || is.null(google_app)) {
-    google_app <- gcalendr_app
-  }
-  gargle::token_fetch(
-    scopes = 'https://www.googleapis.com/auth/calendar.readonly',
-    app = google_app,
-    email = email
-  )
 }

@@ -1,7 +1,7 @@
 stop_glue <- function (..., .sep = "", .envir = parent.frame(), call. = FALSE,
           .domain = NULL)
 {
-  stop(glue(..., .sep = .sep, .envir = .envir), call. = call., domain = .domain)
+  stop(glue::glue(..., .sep = .sep, .envir = .envir), call. = call., domain = .domain)
 }
 
 #' Build a request for the Google Calendar API
@@ -15,7 +15,7 @@ stop_glue <- function (..., .sep = "", .envir = parent.frame(), call. = FALSE,
 #'   functions here are intended for internal use and for programming around the
 #'   Calendar API.
 #'
-#' @description `generate_request()` lets you provide the bare minimum of input.
+#' @description `request_generate()` lets you provide the bare minimum of input.
 #'   It takes a nickname for an endpoint and:
 #'
 #'   * Uses the API spec to look up the `path`, `method`, and base URL.
@@ -26,26 +26,16 @@ stop_glue <- function (..., .sep = "", .envir = parent.frame(), call. = FALSE,
 #'
 #'   * Adds an API key to the query if and only if `token = NULL`.
 #'
-#'   * Adds `supportsTeamDrives = TRUE` to the query if the endpoint requires.
-#'
-#' @param endpoint Character. Nickname for one of the selected Drive v3 API
-#'   endpoints built into googledrive. Learn more in [drive_endpoints()].
+#' @param endpoint Character. Nickname for one of the selected Calendar v3 API
+#'   endpoints built into `gcalendr`. Learn more in [gcalendr_endpoints()].
 #'
 #' @param params Named list. Parameters destined for endpoint URL substitution,
 #'   the query, or the body.
 #'
-#' @param key API key. Needed for requests that don't contain a token. The need
-#'   for an API key in the absence of a token is explained in Google's document
-#'   [Credentials, access, security, and
-#'   identity](https://support.google.com/googleapi/answer/6158857?hl=en&ref_topic=7013279).
-#'    In order of precedence, these sources are consulted: the formal `key`
-#'   argument, a `key` parameter in `params`, a pre-configured API key fetched
-#'   via [drive_api_key()]. googledrive ships with a built-in key or users can
-#'   override with their own via [drive_auth_config()].
 #'
-#' @param token Drive token. Set to `NULL` to suppress the inclusion of a token.
-#'   Note that, if auth has been de-activated via [drive_auth_config()],
-#'   `drive_token()` will actually return `NULL`.
+#' @param token Calendar token. Set to `NULL` to suppress the inclusion of a token.
+#'   Note that, if auth has been de-activated via [gcalendr_auth_config()],
+#'   `gcalendr_token()` will actually return `NULL`.
 #'
 #' @return `list()`\cr Components are `method`, `path`, `query`, `body`,
 #'   `token`, and `url`, suitable as input for [request_make()].
@@ -57,33 +47,26 @@ stop_glue <- function (..., .sep = "", .envir = parent.frame(), call. = FALSE,
 #'
 #' @examples
 #' \dontrun{
-#' req <- generate_request(
+#' req <- request_generate(
 #'   "drive.files.get",
 #'   list(fileId = "abc"),
-#'   token = drive_token()
+#'   token = gcalendr_token()
 #' )
 #' req
 #' }
-generate_request <- function(endpoint = character(),
+request_generate <- function(endpoint = character(),
                              params = list(),
-                             key = NULL,
-                             token) {
+                             token = gcalendr_token()) {
   ept <- .endpoints[[endpoint]]
   if (is.null(ept)) {
     stop_glue("\nEndpoint not recognized:\n  * {endpoint}")
   }
 
-  ## modifications specific to googledrive package
-  params$key <- key %||% params$key # %||% drive_api_key()
-  # if (!is.null(ept$parameters$supportsTeamDrives)) {
-  #   params$supportsTeamDrives <- TRUE
-  # }
-
   req <- gargle::request_develop(endpoint = ept, params = params)
 
   gargle::request_build(
-    path = req$path,
     method = req$method,
+    path = req$path,
     params = req$params,
     body = req$body,
     token = token

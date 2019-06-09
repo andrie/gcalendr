@@ -12,6 +12,14 @@ gcalendr_api_key()
 
 gcalendr_oauth_app()
 }
+\arguments{
+\item{app}{OAuth app. Defaults to a tidyverse app.}
+
+\item{path}{Path to the JSON file.}
+
+\item{api_key}{API key. Defaults to a tidyverse key. Necessary in
+order to make unauthorized "token-free" requests for public resources.}
+}
 \value{
 \code{gcalendr_auth_config()}: An object of R6 class \code{AuthState},
 which is defined in the gargle package. \code{gcalendr_api_key()}: the
@@ -63,6 +71,7 @@ gcalendr_auth_config(
   path = "/path/to/the/JSON/you/downloaded/from/google/dev/console.json"
 )
 }
+
 }
 \seealso{
 Other auth functions: \code{\link{gcalendr_auth}},

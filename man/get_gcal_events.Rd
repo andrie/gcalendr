@@ -4,8 +4,8 @@
 \alias{get_gcal_events}
 \title{Read list of google calendar events.}
 \usage{
-get_gcal_events(id, token, days_in_past = 90, days_in_future = 90,
-  now = Sys.time(), max_results = 250)
+get_gcal_events(id, token = gcalendr_token(), days_in_past = 90,
+  days_in_future = 90, now = Sys.time(), max_results = 250)
 }
 \arguments{
 \item{id}{calendar id, obtained from \code{\link[=get_gcal_list]{get_gcal_list()}}}
@@ -27,7 +27,6 @@ Read list of google calendar events.
 https://developers.google.com/google-apps/calendar/v3/reference/events/list
 }
 \seealso{
-Other gcal functions: \code{\link{get_gcal_list}},
-  \code{\link{get_google_token}}
+Other gcal functions: \code{\link{get_gcal_list}}
 }
 \concept{gcal functions}

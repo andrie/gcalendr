@@ -10,12 +10,12 @@ gcalendr_app <- function() {
   )
 }
 
-gcalendr_api_key <- function() {""}
+gcalendr_api_key <- function() {NULL} # All requests must be authenticated
 
 .auth <- gargle::init_AuthState(
   package     = "gcalendr",
   app         = gcalendr_app(),     # YOUR PKG SHOULD USE ITS OWN APP!
-  api_key     = gcalendr_api_key(), # YOUR PKG SHOULD USE ITS OWN KEY!
+  api_key     = NULL, # YOUR PKG SHOULD USE ITS OWN KEY!
   auth_active = TRUE
 )
 
@@ -67,14 +67,14 @@ gargle_lookup_table <- list(
 gcalendr_auth <- function(
   email = NULL,
   path = NULL,
-  scopes = "https://www.googleapis.com/auth/drive",
+  scopes = "https://www.googleapis.com/auth/calendar.readonly",
   cache = gargle::gargle_oauth_cache(),
   use_oob = gargle::gargle_oob_default(),
   token = NULL)
 {
   cred <- gargle::token_fetch(
     scopes = scopes,
-    app = gcalendr_oauth_app() %||% gargle::tidyverse_app(),
+    app = gcalendr_oauth_app(), # %||% gargle::tidyverse_app(),
     email = email,
     path = path,
     package = "gcalendr",
@@ -188,6 +188,8 @@ gcalendr_has_token <- function() {
 #'   path = "/path/to/the/JSON/you/downloaded/from/google/dev/console.json"
 #' )
 #' }
+#'
+#' @importFrom rlang is_string
 gcalendr_auth_config <- function(
   app = NULL,
   path = NULL,

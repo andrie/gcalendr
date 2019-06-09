@@ -8,8 +8,8 @@ gcalendr_deauth()
 }
 \description{
 Put gcalendr into a de-authorized state. Instead of sending a token,
-gcalendr will send its API key. This can be used to access public
-files for which no Google sign-in is required. This is handy for using
+gcalendr will send an API key. This can be used to access public
+resources for which no Google sign-in is required. This is handy for using
 gcalendr in a non-interactive setting to make requests that do not
 require a token. It will prevent the attempt to obtain a token
 interactively in the browser. A built-in API key is used by default or
