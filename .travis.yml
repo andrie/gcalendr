@@ -1,6 +1,7 @@
 # R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
 
 language: R
+sudo: false
 cache: packages
 
 addons:
@@ -10,5 +11,27 @@ addons:
     packages:
     - libsodium-dev
 
-after_success:
-  - Rscript -e 'covr::codecov()'
+matrix:
+  include:
+    - r: release
+      after_success:
+      - Rscript -e 'covr::codecov()'
+      - find . -name testthat.Rout | xargs cat
+      after_failure:
+      - find . -name testthat.Rout | xargs cat
+      deploy:
+        provider: script
+        script: Rscript -e 'pkgdown::deploy_site_github()'
+        skip_cleanup: true
+    - r: devel
+      env: GOOGLEDRIVE_PASSWORD=''
+      r_build_args: --no-build-vignettes
+      r_check_args: --ignore-vignettes --no-examples
+    - r: release
+      env: GOOGLEDRIVE_PASSWORD=''
+      r_build_args: --no-build-vignettes
+      r_check_args: --ignore-vignettes --no-examples
+    - r: oldrel
+      env: GOOGLEDRIVE_PASSWORD=''
+      r_build_args: --no-build-vignettes
+      r_check_args: --ignore-vignettes --no-examples
