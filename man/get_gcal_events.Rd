@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_calendar_events.R
 \name{get_gcal_events}
 \alias{get_gcal_events}
-\title{Read list of google calendar events.}
+\title{Retrieve google calendar events.}
 \usage{
 get_gcal_events(id, token = gcalendr_token(), days_in_past = 90,
   days_in_future = 90, now = Sys.time(), max_results = 250)
@@ -10,23 +10,35 @@ get_gcal_events(id, token = gcalendr_token(), days_in_past = 90,
 \arguments{
 \item{id}{calendar id, obtained from \code{\link[=get_gcal_list]{get_gcal_list()}}}
 
-\item{token}{token obtained from \link{get_google_token}}
+\item{token}{token obtained from \code{\link[=gcalendr_token]{gcalendr_token()}}}
 
 \item{days_in_past}{Restrict results to date range, number of days in past}
 
-\item{days_in_future}{Restrict results to date range, number of days into future}
+\item{days_in_future}{Restrict results to date range, number of days into
+future}
 
 \item{now}{Reference time stamp, defaulting to \code{\link[=Sys.time]{Sys.time()}}}
 
-\item{max_results}{Maximum number of results retrieved per query}
+\item{max_results}{Used internally to specify the maximum number of results
+retrieved per "page" of the query.}
 }
 \description{
-Read list of google calendar events.
+This returns a tibble of events for a specific calendar.
+}
+\details{
+The resulting tibble has nested list columns for:
+\itemize{
+\item \code{attendees}
+\item \code{creator}
+\item \code{organizer}
+}
+
+To unnest these columns, use \code{\link[tidyr:unnest]{tidyr::unnest()}}
 }
 \references{
 https://developers.google.com/google-apps/calendar/v3/reference/events/list
 }
 \seealso{
-Other gcal functions: \code{\link{get_gcal_list}}
+Other calendar functions: \code{\link{get_gcal_list}}
 }
-\concept{gcal functions}
+\concept{calendar functions}

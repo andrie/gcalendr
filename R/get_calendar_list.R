@@ -1,11 +1,11 @@
 #' Get list of calendars from google.
 #'
-#' @param token token obtained from [get_google_token]
 #'
-#' @return character vector with calendar ids
-#' @family gcal functions
+#' @param token token obtained from [gcalendr_token()]
 #'
-#' @importFrom gargle request_make
+#' @return Tibble with columns for `id`, `summary` and `description`.
+#' @family calendar functions
+#'
 #' @export
 get_gcal_list <- function(token = gcalendr_token()){
 

@@ -6,12 +6,18 @@
 \alias{gcalendr-package}
 \title{gcalendr}
 \description{
-Important functions:
+You can read Google calendar data using the  Google Calendar API
 }
 \details{
+Access your calendar:
 \itemize{
-\item \code{\link[=get_google_token]{get_google_token()}}
 \item \code{\link[=get_gcal_list]{get_gcal_list()}}
 \item \code{\link[=get_gcal_events]{get_gcal_events()}}
+}
+
+Authenticate
+\itemize{
+\item \code{\link[=gcalendr_auth]{gcalendr_auth()}}
+\item \code{\link[=gcalendr_token]{gcalendr_token()}}
 }
 }

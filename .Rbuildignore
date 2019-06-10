@@ -10,3 +10,4 @@ client_id.json
 ^data-raw$
 logo.svg
 ^LICENSE\.md$
+^\.travis\.yml$

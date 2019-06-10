@@ -189,7 +189,6 @@ gcalendr_has_token <- function() {
 #' )
 #' }
 #'
-#' @importFrom rlang is_string
 gcalendr_auth_config <- function(
   app = NULL,
   path = NULL,

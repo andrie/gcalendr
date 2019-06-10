@@ -7,15 +7,15 @@
 get_gcal_list(token = gcalendr_token())
 }
 \arguments{
-\item{token}{token obtained from \link{get_google_token}}
+\item{token}{token obtained from \code{\link[=gcalendr_token]{gcalendr_token()}}}
 }
 \value{
-character vector with calendar ids
+Tibble with columns for \code{id}, \code{summary} and \code{description}.
 }
 \description{
 Get list of calendars from google.
 }
 \seealso{
-Other gcal functions: \code{\link{get_gcal_events}}
+Other calendar functions: \code{\link{get_gcal_events}}
 }
-\concept{gcal functions}
+\concept{calendar functions}

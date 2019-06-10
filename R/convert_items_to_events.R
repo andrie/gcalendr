@@ -1,4 +1,4 @@
-utils::globalVariables(c("start", "end", "summary", "location"))
+utils::globalVariables(c("start", "end", "summary", "location", "."))
 
 transform_or_na <- function(df, varname, fn = as_date) {
   if (varname %in% names(df)) df %>% dplyr::pull(!!varname) %>% fn() else fn(NA)

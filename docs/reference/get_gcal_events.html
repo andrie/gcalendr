@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Read list of google calendar events. — get_gcal_events • gcalendr</title>
+<title>Retrieve google calendar events. — get_gcal_events • gcalendr</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -37,9 +37,9 @@
 
 
 
-<meta property="og:title" content="Read list of google calendar events. — get_gcal_events" />
+<meta property="og:title" content="Retrieve google calendar events. — get_gcal_events" />
 
-<meta property="og:description" content="Read list of google calendar events." />
+<meta property="og:description" content="This returns a tibble of events for a specific calendar." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -108,14 +108,14 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Read list of google calendar events.</h1>
+    <h1>Retrieve google calendar events.</h1>
     <small class="dont-index">Source: <a href='https://github.com/andrie/gcalendr/blob/master/R/get_calendar_events.R'><code>R/get_calendar_events.R</code></a></small>
     <div class="hidden name"><code>get_gcal_events.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Read list of google calendar events.</p>
+    <p>This returns a tibble of events for a specific calendar.</p>
     
     </div>
 
@@ -131,7 +131,7 @@
     </tr>
     <tr>
       <th>token</th>
-      <td><p>token obtained from <a href='gcalendr-defunct.html'>get_google_token</a></p></td>
+      <td><p>token obtained from <code><a href='gcalendr_token.html'>gcalendr_token()</a></code></p></td>
     </tr>
     <tr>
       <th>days_in_past</th>
@@ -139,7 +139,8 @@
     </tr>
     <tr>
       <th>days_in_future</th>
-      <td><p>Restrict results to date range, number of days into future</p></td>
+      <td><p>Restrict results to date range, number of days into
+future</p></td>
     </tr>
     <tr>
       <th>now</th>
@@ -147,9 +148,19 @@
     </tr>
     <tr>
       <th>max_results</th>
-      <td><p>Maximum number of results retrieved per query</p></td>
+      <td><p>Used internally to specify the maximum number of results
+retrieved per "page" of the query.</p></td>
     </tr>
     </table>
+    
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>The resulting tibble has nested list columns for:</p><ul>
+<li><p><code>attendees</code></p></li>
+<li><p><code>creator</code></p></li>
+<li><p><code>organizer</code></p></li>
+</ul>
+    <p>To unnest these columns, use <code><a href='https://tidyr.tidyverse.org/reference/nest.html'>tidyr::unnest()</a></code></p>
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
@@ -157,7 +168,7 @@
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other gcal functions: <code><a href='get_gcal_list.html'>get_gcal_list</a></code></p></div>
+    <div class='dont-index'><p>Other calendar functions: <code><a href='get_gcal_list.html'>get_gcal_list</a></code></p></div>
     
 
   </div>
@@ -166,6 +177,8 @@
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
+      <li><a href="#details">Details</a></li>
+
       <li><a href="#references">References</a></li>
 
       <li><a href="#see-also">See also</a></li>
