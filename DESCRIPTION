@@ -1,7 +1,7 @@
 Package: gcalendr
 Type: Package
 Title: Read Events From Google Calendar
-Version: 0.1.1.9000
+Version: 0.1.2.9000
 Authors@R: 
     c(person("Andrie", 
         "de Vries", 
@@ -16,14 +16,23 @@ Authors@R:
         role = "cph",
         comment = "Google Calendar API and discovery documents"))
 Description: Read events from the Google Calendar API.
-Date: 2019-06-10
+Date: 2019-06-11
 License: MIT + file LICENSE
 URL: https://github.com/andrie/gcalendr
-Bugreports: https://andrie.github.io/gcalendr/issues 
+BugReports: https://andrie.github.io/gcalendr/issues 
 Encoding: UTF-8
 LazyData: true
 Depends:
     R (>= 2.10)
+Imports: 
+    rlang,
+    purrr,
+    httr,
+    dplyr,
+    lubridate,
+    gargle,
+    tibble,
+    glue
 Suggests: 
     covr,
     httptest,
@@ -31,18 +40,8 @@ Suggests:
     rmarkdown,
     testthat (>= 2.1.0),
     withr,
+    tidyr,
     sodium
 VignetteBuilder: rmarkdown
-Imports: 
-    rlang,
-    purrr,
-    httr,
-    dplyr,
-    lubridate,
-    tidyr,
-    gargle,
-    tibble,
-    glue
 RoxygenNote: 6.1.1
 Roxygen: list(markdown = TRUE)
-BugReports: https://github.com/andrie/gcalendr/issues

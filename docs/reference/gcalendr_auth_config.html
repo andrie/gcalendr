@@ -92,7 +92,7 @@ currently configured API key and OAuth app, respectively." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">gcalendr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.2.9000</span>
       </span>
     </div>
 
@@ -159,9 +159,7 @@ currently configured API key and OAuth app, respectively.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>gcalendr_auth_config</span>(<span class='kw'>app</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>path</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>api_key</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
-
-<span class='fu'>gcalendr_api_key</span>()
+    <pre class="usage"><span class='fu'>gcalendr_auth_config</span>(<span class='kw'>app</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>path</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
 
 <span class='fu'>gcalendr_oauth_app</span>()</pre>
     
@@ -176,19 +174,7 @@ currently configured API key and OAuth app, respectively.</p>
       <th>path</th>
       <td><p>Path to the JSON file.</p></td>
     </tr>
-    <tr>
-      <th>api_key</th>
-      <td><p>API key. Defaults to a gcalendr-package key. Necessary in
-order to make unauthorized "token-free" requests for public resources.</p></td>
-    </tr>
     </table>
-    
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p><code>gcalendr_auth_config()</code>: An object of R6 class <code>AuthState</code>,
-which is defined in the gargle package. <code>gcalendr_api_key()</code>: the
-current API key. <code>gcalendr_oauth_app()</code>: the current
-<code><a href='https://www.rdocumentation.org/packages/httr/topics/oauth_app'>httr::oauth_app()</a></code>.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
@@ -205,6 +191,7 @@ current API key. <code>gcalendr_oauth_app()</code>: the current
 #&gt;      &lt;auth_active&gt; TRUE
 #&gt;      &lt;credentials&gt; NULL
 #&gt; ---</div><div class='input'>
+</div><span class='co'># NOT RUN {</span>
 <span class='kw'>if</span> (<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>require</a></span>(<span class='no'>httr</span>)) {
   <span class='co'>## bring your own app via client id (aka key) and secret</span>
   <span class='no'>google_app</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>httr</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/httr/topics/oauth_app'>oauth_app</a></span>(
@@ -212,16 +199,9 @@ current API key. <code>gcalendr_oauth_app()</code>: the current
     <span class='kw'>key</span> <span class='kw'>=</span> <span class='st'>"123456789.apps.googleusercontent.com"</span>,
     <span class='kw'>secret</span> <span class='kw'>=</span> <span class='st'>"abcdefghijklmnopqrstuvwxyz"</span>
   )
-  <span class='no'>google_key</span> <span class='kw'>&lt;-</span> <span class='st'>"the-key-I-got-for-a-google-API"</span>
-  <span class='fu'>gcalendr_auth_config</span>(<span class='kw'>app</span> <span class='kw'>=</span> <span class='no'>google_app</span>, <span class='kw'>api_key</span> <span class='kw'>=</span> <span class='no'>google_key</span>)
-}</div><div class='output co'>#&gt; <span class='message'>Loading required package: httr</span></div><div class='output co'>#&gt; &lt;AuthState (via gargle)&gt;
-#&gt;          &lt;package&gt; gcalendr
-#&gt;              &lt;app&gt; my-awesome-google-api-wrapping-package
-#&gt;          &lt;api_key&gt; the-key...
-#&gt;      &lt;auth_active&gt; TRUE
-#&gt;      &lt;credentials&gt; NULL
-#&gt; ---</div><div class='input'>
-</div><span class='co'># NOT RUN {</span>
+  <span class='fu'>gcalendr_auth_config</span>(<span class='kw'>app</span> <span class='kw'>=</span> <span class='no'>google_app</span>)
+}
+
 <span class='co'>## bring your own app via JSON downloaded from Google Developers Console</span>
 <span class='fu'>gcalendr_auth_config</span>(
   <span class='kw'>path</span> <span class='kw'>=</span> <span class='st'>"/path/to/the/JSON/you/downloaded/from/google/dev/console.json"</span>
@@ -234,8 +214,6 @@ current API key. <code>gcalendr_oauth_app()</code>: the current
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
-      <li><a href="#value">Value</a></li>
-
       <li><a href="#see-also">See also</a></li>
       
       <li><a href="#examples">Examples</a></li>

@@ -7,7 +7,4 @@
 #' @export
 get_google_token <- function(google_app){
   .Defunct("gcalendr_token", package = "gcalendr")
-
-  gcalendr_token()
-
 }

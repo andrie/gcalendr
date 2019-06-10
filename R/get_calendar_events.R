@@ -10,7 +10,8 @@ call_gcal_api <- function(id, token = gcalendr_token(), time_min, time_max, max_
     params = list(
       timeMin = time_min,
       timeMax = time_max,
-      calendarId = id
+      calendarId = id,
+      maxResults = max_results
     )
   )
   r <- request_make(req)

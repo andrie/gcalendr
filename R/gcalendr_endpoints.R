@@ -1,5 +1,3 @@
-expose <- function() structure(list(), class = "expose")
-is_expose <- function(x) inherits(x, "expose")
 
 #' List Calendar endpoints
 #'
@@ -23,6 +21,7 @@ is_expose <- function(x) inherits(x, "expose")
 #' gcalendr_endpoints("calendar.events.list")
 #' gcalendr_endpoints(4)
 gcalendr_endpoints <- function(i = NULL) {
+  is_expose <- function(x) inherits(x, "expose")
   if (is.null(i) || is_expose(i)) {
     i <- seq_along(.endpoints)
   }

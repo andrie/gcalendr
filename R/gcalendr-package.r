@@ -22,7 +22,6 @@
 #' @importFrom purrr pluck discard pluck
 #' @importFrom rlang flatten is_string %||%
 #' @importFrom lubridate as_date as_datetime
-#' @importFrom tidyr nest
 #' @importFrom tibble tibble as_tibble
 #' @importFrom gargle  request_make
 #'
