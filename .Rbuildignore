@@ -11,3 +11,4 @@ client_id.json
 logo.svg
 ^LICENSE\.md$
 ^\.travis\.yml$
+^codecov\.yml$

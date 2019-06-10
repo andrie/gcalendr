@@ -11,6 +11,8 @@ status](https://travis-ci.org/andrie/gcalendr.svg?branch=master)](https://travis
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/gcalendr)](https://cran.r-project.org/package=gcalendr)
+[![Codecov test
+coverage](https://codecov.io/gh/andrie/gcalendr/branch/master/graph/badge.svg)](https://codecov.io/gh/andrie/gcalendr?branch=master)
 <!-- badges: end -->
 
 This package enables you to read events from google calendar.
