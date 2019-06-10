@@ -55,12 +55,12 @@ convert_items_to_events <- function(items){
           pluck(., "attendees") %>%
             map_dfr(
               ~tibble(
-                email           = .[["email"]] %||% NA,
-                response_status = .[["responseStatus"]] %||% NA,
-                organizer       = .[["organizer"]] %||% NA,
-                optional        = .[["optional"]] %||% NA,
-                display_name    = .[["displayName"]] %||% NA,
-                self            = .[["self"]] %||% NA
+                email           = .[["email"]]                     %||% NA_character_,
+                response_status = .[["responseStatus"]]            %||% NA_character_,
+                organizer       = as.character(.[["organizer"]])   %||% NA_character_,
+                optional        = .[["optional"]]                  %||% NA,
+                display_name    = as.character(.[["displayName"]]) %||% NA_character_,
+                self            = .[["self"]]                      %||% NA
               )
             )
         )
@@ -75,8 +75,8 @@ convert_items_to_events <- function(items){
         id = pluck(., "id"),
         creator = list(
           tibble(
-            email        = pluck(., "creator", "email") %||% NA,
-            display_name = pluck(., "creator", "displayName") %||% NA,
+            email        = pluck(., "creator", "email") %||% NA_character_,
+            display_name = pluck(., "creator", "displayName") %||% NA_character_,
             self         = pluck(., "creator", "self") %||% NA
           )
         )

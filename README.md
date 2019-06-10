@@ -3,6 +3,16 @@
 
 # gcalendr <img src='man/figures/logo.svg' align="right" height="139" />
 
+<!-- badges: start -->
+
+[![Travis build
+status](https://travis-ci.org/andrie/gcalendr.svg?branch=master)](https://travis-ci.org/andrie/gcalendr)
+[![Lifecycle:
+experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+[![CRAN
+status](https://www.r-pkg.org/badges/version/gcalendr)](https://cran.r-project.org/package=gcalendr)
+<!-- badges: end -->
+
 This package enables you to read events from google calendar.
 
 ## Installation
