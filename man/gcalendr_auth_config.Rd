@@ -13,11 +13,11 @@ gcalendr_api_key()
 gcalendr_oauth_app()
 }
 \arguments{
-\item{app}{OAuth app. Defaults to a tidyverse app.}
+\item{app}{OAuth app. Defaults to a gcalendr-package app.}
 
 \item{path}{Path to the JSON file.}
 
-\item{api_key}{API key. Defaults to a tidyverse key. Necessary in
+\item{api_key}{API key. Defaults to a gcalendr-package key. Necessary in
 order to make unauthorized "token-free" requests for public resources.}
 }
 \value{

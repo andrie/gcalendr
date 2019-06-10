@@ -3,10 +3,10 @@
 
 gcalendr_app <- function() {
   oauth_app(
-    appname = 'GOOGLE_APIS',
-    key = paste0("115354746897-98g2v3hvasb4q1p0p4adp37ophpqqo7l",
+    appname = 'gcalendr-package',
+    key = paste0("939459484985-6ne1is9g2dth4ba712e1lorvadfgd4f6",
                  ".apps.googleusercontent.com"),
-    secret = "0qh9MxOXWzaKIX016Jv_mVqQ"
+    secret = "-zzKsgiihagO4hHisKt1wpbE"
   )
 }
 
@@ -27,7 +27,7 @@ gargle_lookup_table <- list(
   PRODUCT     = "Google Calendar",
   API         = "Calendar API",
   PREFIX      = "gcalendr",
-  AUTH_CONFIG_SOURCE = "tidyverse"
+  AUTH_CONFIG_SOURCE = "gcalendr-package"
 )
 
 #' Authorize gcalendr
@@ -58,7 +58,7 @@ gargle_lookup_table <- list(
 #'
 #' ## use a 'read only' scope, so it's impossible to edit or delete files
 #' gcalendr_auth(
-#'   scopes = "https://www.googleapis.com/auth/drive.readonly"
+#'   scopes = "https://www.googleapis.com/auth/calendar.readonly"
 #' )
 #'
 #' ## use a service account token
@@ -74,7 +74,7 @@ gcalendr_auth <- function(
 {
   cred <- gargle::token_fetch(
     scopes = scopes,
-    app = gcalendr_oauth_app(), # %||% gargle::tidyverse_app(),
+    app = gcalendr_oauth_app(),
     email = email,
     path = path,
     package = "gcalendr",

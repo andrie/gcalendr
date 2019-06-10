@@ -18,20 +18,25 @@ devtools::install_github("andrie/gcalendr")
 
 ## Example
 
-This is a basic example which shows you how to solve a common problem:
+Use this example to authenticate, list available calendars and view
+events:
 
 ``` r
-# Set up google oauth permissions
-google_token <- get_google_token()
+## Set up google oauth permissions
+## This will prompt you to specify an account
+gcalendr_auth()
 
-# Get tibble of available calenders
-calendar_ids <- get_gcal_list(google_token)
+## To specify a specific account, provide your email address
+gcalendr_auth("apdevries@gmail.com")
+
+
+## Retrieve tibble of available calenders
+calendar_ids <- get_gcal_list()
 calendar_ids
 
-# Retrieve tibble of events from a calendar
-# By default maximum 250 results are returned
+## Retrieve tibble of events from a specific calendar
 
-my_cal_id <- calendar_ids[7, "id"]
-events <- get_gcal_events(my_cal_id, google_token, days_in_past = 90, days_in_future = 90)
+my_cal_id <- "apdevries@gmail.com"
+events <- get_gcal_events(my_cal_id, days_in_past = 90, days_in_future = 90)
 events
 ```

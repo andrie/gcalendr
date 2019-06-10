@@ -37,7 +37,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">gcalendr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.2.9001</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1.9000</span>
       </span>
     </div>
 
@@ -53,7 +53,14 @@
   <a href="reference/index.html">Reference</a>
 </li>
       </ul>
-<ul class="nav navbar-nav navbar-right"></ul>
+<ul class="nav navbar-nav navbar-right">
+<li>
+  <a href="https://github.com/andrie/gcalendr">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
 </div>
 <!--/.nav-collapse -->
   </div>
@@ -87,31 +94,43 @@
 <div id="example" class="section level2">
 <h2 class="hasAnchor">
 <a href="#example" class="anchor"></a>Example</h2>
-<p>This is a basic example which shows you how to solve a common problem:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="co"># Set up google oauth permissions</span></a>
-<a class="sourceLine" id="cb2-2" title="2"><span class="kw"><a href="reference/gcalendr_auth.html">gcalendr_auth</a></span>()</a>
-<a class="sourceLine" id="cb2-3" title="3"></a>
-<a class="sourceLine" id="cb2-4" title="4"><span class="co"># Get tibble of available calenders</span></a>
-<a class="sourceLine" id="cb2-5" title="5">calendar_ids &lt;-<span class="st"> </span><span class="kw"><a href="reference/get_gcal_list.html">get_gcal_list</a></span>()</a>
-<a class="sourceLine" id="cb2-6" title="6">calendar_ids</a>
+<p>Use this example to authenticate, list available calendars and view events:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="co">## Set up google oauth permissions</span></a>
+<a class="sourceLine" id="cb2-2" title="2"><span class="co">## This will prompt you to specify an account</span></a>
+<a class="sourceLine" id="cb2-3" title="3"><span class="kw"><a href="reference/gcalendr_auth.html">gcalendr_auth</a></span>()</a>
+<a class="sourceLine" id="cb2-4" title="4"></a>
+<a class="sourceLine" id="cb2-5" title="5"><span class="co">## To specify a specific account, provide your email address</span></a>
+<a class="sourceLine" id="cb2-6" title="6"><span class="kw"><a href="reference/gcalendr_auth.html">gcalendr_auth</a></span>(<span class="st">"apdevries@gmail.com"</span>)</a>
 <a class="sourceLine" id="cb2-7" title="7"></a>
-<a class="sourceLine" id="cb2-8" title="8"><span class="co"># Retrieve tibble of events from a calendar</span></a>
-<a class="sourceLine" id="cb2-9" title="9"><span class="co"># By default maximum 250 results are returned</span></a>
-<a class="sourceLine" id="cb2-10" title="10"></a>
-<a class="sourceLine" id="cb2-11" title="11">my_cal_id &lt;-<span class="st"> "apdevries@gmail.com"</span></a>
-<a class="sourceLine" id="cb2-12" title="12">events &lt;-<span class="st"> </span><span class="kw"><a href="reference/get_gcal_events.html">get_gcal_events</a></span>(my_cal_id, <span class="dt">days_in_past =</span> <span class="dv">90</span>, <span class="dt">days_in_future =</span> <span class="dv">90</span>)</a>
-<a class="sourceLine" id="cb2-13" title="13">events</a></code></pre></div>
+<a class="sourceLine" id="cb2-8" title="8"></a>
+<a class="sourceLine" id="cb2-9" title="9"><span class="co">## Retrieve tibble of available calenders</span></a>
+<a class="sourceLine" id="cb2-10" title="10">calendar_ids &lt;-<span class="st"> </span><span class="kw"><a href="reference/get_gcal_list.html">get_gcal_list</a></span>()</a>
+<a class="sourceLine" id="cb2-11" title="11">calendar_ids</a>
+<a class="sourceLine" id="cb2-12" title="12"></a>
+<a class="sourceLine" id="cb2-13" title="13"><span class="co">## Retrieve tibble of events from a specific calendar</span></a>
+<a class="sourceLine" id="cb2-14" title="14"></a>
+<a class="sourceLine" id="cb2-15" title="15">my_cal_id &lt;-<span class="st"> "apdevries@gmail.com"</span></a>
+<a class="sourceLine" id="cb2-16" title="16">events &lt;-<span class="st"> </span><span class="kw"><a href="reference/get_gcal_events.html">get_gcal_events</a></span>(my_cal_id, <span class="dt">days_in_past =</span> <span class="dv">90</span>, <span class="dt">days_in_future =</span> <span class="dv">90</span>)</a>
+<a class="sourceLine" id="cb2-17" title="17">events</a></code></pre></div>
 </div>
 </div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <div class="license">
+    <div class="links">
+<h2>Links</h2>
+<ul class="list-unstyled">
+<li>Browse source code at <br><a href="https://github.com/andrie/gcalendr">https://​github.com/​andrie/​gcalendr</a>
+</li>
+<li>Report a bug at <br><a href="https://github.com/andrie/gcalendr/issues">https://​github.com/​andrie/​gcalendr/​issues</a>
+</li>
+</ul>
+</div>
+<div class="license">
 <h2>License</h2>
 <ul class="list-unstyled">
-<li>
-<a href="https://opensource.org/licenses/mit-license.php">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a>
-</li>
+<li><a href="LICENSE.html">Full license</a></li>
+<li><small><a href="https://opensource.org/licenses/mit-license.php">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a></small></li>
 </ul>
 </div>
 <div class="developers">

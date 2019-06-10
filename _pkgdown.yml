@@ -1,1 +1,28 @@
 destination: docs
+
+reference:
+- title: Authenticating
+  desc: Take explicit control of the Google auth status or examine current state
+  contents:
+  - '`gcalendr_auth`'
+  - '`gcalendr_deauth`'
+  - '`gcalendr_token`'
+  - '`gcalendr_auth_config`'
+  - '`gcalendr_has_token`'
+- title: Read a google calendar
+  desc: Get a list of calendars and read events from a calendar
+  contents:
+  - '`get_gcal_events`'
+  - '`get_gcal_list`'
+- title: Calendar API spec
+  desc: Info about or check input against the Calendar API spec
+  contents:
+  - '`gcalendr_endpoints`'
+- title: Programming to the Calendar API
+  desc: Low-level functions used internally and made available for programming
+  contents:
+  - '`request_generate`'
+- title: No longer used
+  desc: These functions were available in earlier versions of the package but now deprecated
+  contents:
+  - '`get_google_token`'

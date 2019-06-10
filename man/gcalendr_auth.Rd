@@ -96,7 +96,7 @@ gcalendr_auth(email = NA)
 
 ## use a 'read only' scope, so it's impossible to edit or delete files
 gcalendr_auth(
-  scopes = "https://www.googleapis.com/auth/drive.readonly"
+  scopes = "https://www.googleapis.com/auth/calendar.readonly"
 )
 
 ## use a service account token

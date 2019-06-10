@@ -92,7 +92,7 @@ currently configured API key and OAuth app, respectively." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">gcalendr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.2.9001</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1.9000</span>
       </span>
     </div>
 
@@ -110,7 +110,12 @@ currently configured API key and OAuth app, respectively." />
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/andrie/gcalendr">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -124,7 +129,7 @@ currently configured API key and OAuth app, respectively." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>View or edit auth config</h1>
-    
+    <small class="dont-index">Source: <a href='https://github.com/andrie/gcalendr/blob/master/R/gcalendr_auth.R'><code>R/gcalendr_auth.R</code></a></small>
     <div class="hidden name"><code>gcalendr_auth_config.Rd</code></div>
     </div>
 
@@ -165,7 +170,7 @@ currently configured API key and OAuth app, respectively.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>app</th>
-      <td><p>OAuth app. Defaults to a tidyverse app.</p></td>
+      <td><p>OAuth app. Defaults to a gcalendr-package app.</p></td>
     </tr>
     <tr>
       <th>path</th>
@@ -173,7 +178,7 @@ currently configured API key and OAuth app, respectively.</p>
     </tr>
     <tr>
       <th>api_key</th>
-      <td><p>API key. Defaults to a tidyverse key. Necessary in
+      <td><p>API key. Defaults to a gcalendr-package key. Necessary in
 order to make unauthorized "token-free" requests for public resources.</p></td>
     </tr>
     </table>
@@ -195,7 +200,7 @@ current API key. <code>gcalendr_oauth_app()</code>: the current
     <pre class="examples"><div class='input'><span class='co'>## this will print current config</span>
 <span class='fu'>gcalendr_auth_config</span>()</div><div class='output co'>#&gt; &lt;AuthState (via gargle)&gt;
 #&gt;          &lt;package&gt; gcalendr
-#&gt;              &lt;app&gt; GOOGLE_APIS
+#&gt;              &lt;app&gt; gcalendr-package
 #&gt;          &lt;api_key&gt; 
 #&gt;      &lt;auth_active&gt; TRUE
 #&gt;      &lt;credentials&gt; NULL

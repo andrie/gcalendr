@@ -9,3 +9,4 @@ client_id.json
 ^pkgdown$
 ^data-raw$
 logo.svg
+^LICENSE\.md$
