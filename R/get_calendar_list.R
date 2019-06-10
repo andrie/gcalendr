@@ -18,14 +18,21 @@ get_gcal_list <- function(token = gcalendr_token()){
     ifelse(is.null(x), NA, x)
   }
 
-  r %>%
-    pluck("items") %>%
-    map_dfr(
-      ~list(
-        id = .[["id"]],
-        summary = .[["summary"]],
-        description = .[["description"]]  %>% null_to_na()
-      )
+  if (length(r[["items"]]) == 0) {
+    tibble(
+      id = character(),
+      summary = character(),
+      description = character()
     )
+  } else {
+    r[["items"]] %>%
+      map_dfr(
+        ~tibble(
+          id = .[["id"]]                   %||% NA,
+          summary = .[["summary"]]         %||% NA,
+          description = .[["description"]] %||% NA
+        )
+      )
+  }
 
 }
