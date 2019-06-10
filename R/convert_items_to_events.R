@@ -75,9 +75,9 @@ convert_items_to_events <- function(items){
         id = pluck(., "id"),
         creator = list(
           tibble(
-            email        = pluck(., "creator", "email") %||% NA_character_,
-            display_name = pluck(., "creator", "displayName") %||% NA_character_,
-            self         = pluck(., "creator", "self") %||% NA
+            email        = .[["creator"]][["email"]]       %||% NA_character_,
+            display_name = .[["creator"]][["displayName"]] %||% NA_character_,
+            self         = .[["creator"]][["self"]]        %||% NA
           )
         )
       )
@@ -90,9 +90,9 @@ convert_items_to_events <- function(items){
         id = pluck(., "id"),
         organizer = list(
           tibble(
-            email        = pluck(., "organizer", "email") %||% NA,
-            display_name = pluck(., "organizer", "displayName") %||% NA,
-            self         = pluck(., "organizer", "self") %||% NA
+            email        = .[["organizer"]][["email"]]       %||% NA_character_,
+            display_name = .[["organizer"]][["displayName"]] %||% NA_character_,
+            self         = .[["organizer"]][["self"]]        %||% NA
           )
         )
       )
