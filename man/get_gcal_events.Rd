@@ -5,7 +5,7 @@
 \title{Retrieve google calendar events.}
 \usage{
 get_gcal_events(id, token = gcalendr_token(), days_in_past = 90,
-  days_in_future = 90, now = Sys.time(), max_results = 250)
+  days_in_future = 90, now = Sys.Date(), max_results = 250)
 }
 \arguments{
 \item{id}{calendar id, obtained from \code{\link[=get_gcal_list]{get_gcal_list()}}}

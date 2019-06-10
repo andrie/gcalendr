@@ -10,8 +10,6 @@ gcalendr_app <- function() {
   )
 }
 
-gcalendr_api_key <- function() {NULL} # All requests must be authenticated
-
 .auth <- gargle::init_AuthState(
   package     = "gcalendr",
   app         = gcalendr_app(),     # YOUR PKG SHOULD USE ITS OWN APP!
@@ -162,8 +160,6 @@ gcalendr_has_token <- function() {
 #'
 #' @eval gargle:::PREFIX_auth_config_description(gargle_lookup_table)
 #' @eval gargle:::PREFIX_auth_config_params_except_key(gargle_lookup_table)
-#' @eval gargle:::PREFIX_auth_config_params_key(gargle_lookup_table)
-#' @eval gargle:::PREFIX_auth_config_return_with_key(gargle_lookup_table)
 #'
 #' @family auth functions
 #' @export
@@ -171,6 +167,7 @@ gcalendr_has_token <- function() {
 #' ## this will print current config
 #' gcalendr_auth_config()
 #'
+#' \dontrun{
 #' if (require(httr)) {
 #'   ## bring your own app via client id (aka key) and secret
 #'   google_app <- httr::oauth_app(
@@ -178,11 +175,9 @@ gcalendr_has_token <- function() {
 #'     key = "123456789.apps.googleusercontent.com",
 #'     secret = "abcdefghijklmnopqrstuvwxyz"
 #'   )
-#'   google_key <- "the-key-I-got-for-a-google-API"
-#'   gcalendr_auth_config(app = google_app, api_key = google_key)
+#'   gcalendr_auth_config(app = google_app)
 #' }
 #'
-#' \dontrun{
 #' ## bring your own app via JSON downloaded from Google Developers Console
 #' gcalendr_auth_config(
 #'   path = "/path/to/the/JSON/you/downloaded/from/google/dev/console.json"
@@ -191,12 +186,11 @@ gcalendr_has_token <- function() {
 #'
 gcalendr_auth_config <- function(
   app = NULL,
-  path = NULL,
-  api_key = NULL)
+  path = NULL
+)
 {
   stopifnot(is.null(app) || inherits(app, "oauth_app"))
   stopifnot(is.null(path) || is_string(path))
-  stopifnot(is.null(api_key) || is_string(api_key))
 
   if (!is.null(app) && !is.null(path)) {
     stop_glue("Don't provide both 'app' and 'path'. Pick one.")
@@ -209,16 +203,9 @@ gcalendr_auth_config <- function(
     .auth$set_app(app)
   }
 
-  if (!is.null(api_key)) {
-    .auth$set_api_key(api_key)
-  }
-
   .auth
 }
 
-#' @export
-#' @rdname gcalendr_auth_config
-gcalendr_api_key <- function() .auth$api_key
 
 #' @export
 #' @rdname gcalendr_auth_config

@@ -75,10 +75,10 @@ call_gcal_api <- function(id, token = gcalendr_token(), time_min, time_max, max_
 #' @export
 get_gcal_events <- function(id, token = gcalendr_token(),
                             days_in_past = 90, days_in_future = 90,
-                            now = Sys.time(), max_results = 250){
+                            now = Sys.Date(), max_results = 250){
   message("Reading calendar ", id)
-  time_min <- now - days_in_past * 24 * 3600
-  time_max <- now + days_in_future * 24 * 3600
+  time_min <- now - days_in_past
+  time_max <- now + days_in_future
 
   items <- call_gcal_api(
     id = id,

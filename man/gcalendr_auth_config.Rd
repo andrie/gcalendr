@@ -2,13 +2,10 @@
 % Please edit documentation in R/gcalendr_auth.R
 \name{gcalendr_auth_config}
 \alias{gcalendr_auth_config}
-\alias{gcalendr_api_key}
 \alias{gcalendr_oauth_app}
 \title{View or edit auth config}
 \usage{
-gcalendr_auth_config(app = NULL, path = NULL, api_key = NULL)
-
-gcalendr_api_key()
+gcalendr_auth_config(app = NULL, path = NULL)
 
 gcalendr_oauth_app()
 }
@@ -16,15 +13,6 @@ gcalendr_oauth_app()
 \item{app}{OAuth app. Defaults to a gcalendr-package app.}
 
 \item{path}{Path to the JSON file.}
-
-\item{api_key}{API key. Defaults to a gcalendr-package key. Necessary in
-order to make unauthorized "token-free" requests for public resources.}
-}
-\value{
-\code{gcalendr_auth_config()}: An object of R6 class \code{AuthState},
-which is defined in the gargle package. \code{gcalendr_api_key()}: the
-current API key. \code{gcalendr_oauth_app()}: the current
-\code{\link[httr:oauth_app]{httr::oauth_app()}}.
 }
 \description{
 These functions give the user more control over auth than what is
@@ -54,6 +42,7 @@ currently configured API key and OAuth app, respectively.
 ## this will print current config
 gcalendr_auth_config()
 
+\dontrun{
 if (require(httr)) {
   ## bring your own app via client id (aka key) and secret
   google_app <- httr::oauth_app(
@@ -61,11 +50,9 @@ if (require(httr)) {
     key = "123456789.apps.googleusercontent.com",
     secret = "abcdefghijklmnopqrstuvwxyz"
   )
-  google_key <- "the-key-I-got-for-a-google-API"
-  gcalendr_auth_config(app = google_app, api_key = google_key)
+  gcalendr_auth_config(app = google_app)
 }
 
-\dontrun{
 ## bring your own app via JSON downloaded from Google Developers Console
 gcalendr_auth_config(
   path = "/path/to/the/JSON/you/downloaded/from/google/dev/console.json"
