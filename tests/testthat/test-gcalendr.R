@@ -43,14 +43,11 @@ if (gargle:::secret_can_decrypt("gcalendr")) {
 
     creator <-
       events %>%
-      select(id, creator) %>%
-      tidyr::unnest(creator)
+      select(id, starts_with("creator"))
 
     organizer <-
       events %>%
-      select(id, organizer) %>%
-      tidyr::unnest(organizer)
-
+      select(id, dplyr::starts_with("organizer"))
 
     expect_is(attendees, "data.frame")
     expect_equal(ncol(attendees), 7)

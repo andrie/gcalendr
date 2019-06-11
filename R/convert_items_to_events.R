@@ -84,12 +84,11 @@ extract_organizer <- function(items){
 }
 
 
+
 # -------------------------------------------------------------------------
 
-#' @importFrom dplyr inner_join
-convert_items_to_events <- function(items){
-
-  events <- items %>%
+extract_simple_columns <- function(items){
+  items %>%
     map_dfr(~tibble(
       kind                        = .[["kind"]] %||% NA,
       etag                        = .[["etag"]] %||% NA,
@@ -118,7 +117,18 @@ convert_items_to_events <- function(items){
       visibility                  = .[["visibility"]] %||% NA,
       guests_can_see_other_guests = .[["guestsCanSeeOtherGuests"]] %||% NA,
       guests_can_invite_others    = .[["guestsCanInviteOthers"]] %||% NA,
-      private_copy                = .[["privateCopy"]] %||% NA
+      private_copy                = .[["privateCopy"]] %||% NA,
+      color_id                    = .[["colorId"]] %||% NA,
+
+      organizer_email             = .[["organizer"]][["email"]]       %||% NA_character_,
+      organizer_display_name      = .[["organizer"]][["displayName"]] %||% NA_character_,
+      organizer_self              = .[["organizer"]][["self"]]        %||% NA,
+
+      creator_email               = .[["creator"]][["email"]]       %||% NA_character_,
+      creator_display_name        = .[["creator"]][["displayName"]] %||% NA_character_,
+      creator_self                = .[["creator"]][["self"]]        %||% NA
+
+
       # source                      = .[["source"]] %||% NA,
       # attachments                 = .[["attachment"]] %||% NA,
     )) %>%
@@ -131,6 +141,15 @@ convert_items_to_events <- function(items){
       end_timezone,
       dplyr::everything()
     )
+}
+
+
+# -------------------------------------------------------------------------
+
+#' @importFrom dplyr inner_join
+convert_items_to_events <- function(items){
+
+  events <- extract_simple_columns(items)
 
   # if(length(items) != nrow(events)) stop("Incorrect number of events after initial extract")
 
@@ -147,16 +166,16 @@ convert_items_to_events <- function(items){
   )) {
     bind_cols(
       events,
-      attendees[, "attendees"],
-      organizer[, "organizer"],
-      creator[, "creator"]
+      attendees[, "attendees"]
+      # organizer[, "organizer"],
+      # creator[, "creator"]
     )
   } else {
     warning ("Incorrect number of rows")
     events %>%
-      left_join(attendees, by = "id") %>%
-      inner_join(creator, by = "id") %>%
-      inner_join(organizer, by = "id")
+      left_join(attendees, by = "id")
+      # inner_join(creator, by = "id") %>%
+      # inner_join(organizer, by = "id")
   }
 
 
