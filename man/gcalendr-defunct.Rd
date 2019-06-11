@@ -31,5 +31,11 @@ future}
 retrieved per "page" of the query.}
 }
 \description{
-Please use \code{\link[=calendar_auth]{calendar_auth()}} and \code{\link[=calendar_token]{calendar_token()}} instead.
+These functions were available in a very early version of the package.
+Please use these replacement functions instead:
+\itemize{
+\item \code{\link[=calendar_auth]{calendar_auth()}} and \code{\link[=calendar_token]{calendar_token()}}
+\item \code{\link[=calendar_list]{calendar_list()}}
+\item \code{\link[=calendar_events]{calendar_events()}}
+}
 }

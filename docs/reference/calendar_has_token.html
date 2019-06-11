@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Function reference • gcalendr</title>
+<title>Is there a token on hand? — calendar_has_token • gcalendr</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -37,7 +37,11 @@
 
 
 
-<meta property="og:title" content="Function reference" />
+<meta property="og:title" content="Is there a token on hand? — calendar_has_token" />
+
+<meta property="og:description" content="Reports whether gcalendr has stored a token, ready for use in downstream
+requests. Exists mostly for protecting examples that won't work in the
+absence of a token." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -57,7 +61,7 @@
   </head>
 
   <body>
-    <div class="container template-reference-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -104,132 +108,40 @@
       </header>
 
 <div class="row">
-  <div class="contents col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Reference</h1>
+    <h1>Is there a token on hand?</h1>
+    <small class="dont-index">Source: <a href='https://github.com/andrie/gcalendr/blob/master/R/gcalendr_auth.R'><code>R/gcalendr_auth.R</code></a></small>
+    <div class="hidden name"><code>calendar_has_token.Rd</code></div>
     </div>
 
-    <table class="ref-index">
+    <div class="ref-description">
+    
+    <p>Reports whether gcalendr has stored a token, ready for use in downstream
+requests. Exists mostly for protecting examples that won't work in the
+absence of a token.</p>
+    
+    </div>
 
-    <colgroup>
-      
-      <col class="alias" />
-      <col class="title" />
-    </colgroup>
+    <pre class="usage"><span class='fu'>calendar_has_token</span>()</pre>
+        
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-read-a-google-calendar" class="hasAnchor"><a href="#section-read-a-google-calendar" class="anchor"></a>Read a google calendar</h2>
-          <p class="section-desc"><p>Get a list of calendars and read events from a calendar</p></p>
-        </th>
-      </tr>
-      <tr>
-        
-        <td>
-          <p><code><a href="calendar_list.html">calendar_list()</a></code> </p>
-        </td>
-        <td><p>Get list of calendars from google.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="calendar_events.html">calendar_events()</a></code> </p>
-        </td>
-        <td><p>Retrieve google calendar events.</p></td>
-      </tr>
-    </tbody><tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-authenticating" class="hasAnchor"><a href="#section-authenticating" class="anchor"></a>Authenticating</h2>
-          <p class="section-desc"><p>Take explicit control of the Google auth status or examine current state</p></p>
-        </th>
-      </tr>
-      <tr>
-        
-        <td>
-          <p><code><a href="calendar_auth.html">calendar_auth()</a></code> </p>
-        </td>
-        <td><p>Authorize gcalendr</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="calendar_deauth.html">calendar_deauth()</a></code> </p>
-        </td>
-        <td><p>Suspend authorization</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="calendar_token.html">calendar_token()</a></code> </p>
-        </td>
-        <td><p>Produce configured token</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="calendar_auth_config.html">calendar_auth_config()</a></code> <code><a href="calendar_auth_config.html">calendar_oauth_app()</a></code> </p>
-        </td>
-        <td><p>View or edit auth config</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="calendar_has_token.html">calendar_has_token()</a></code> </p>
-        </td>
-        <td><p>Is there a token on hand?</p></td>
-      </tr>
-    </tbody><tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-calendar-api-spec" class="hasAnchor"><a href="#section-calendar-api-spec" class="anchor"></a>Calendar API spec</h2>
-          <p class="section-desc"><p>Info about or check input against the Calendar API spec</p></p>
-        </th>
-      </tr>
-      <tr>
-        
-        <td>
-          <p><code><a href="calendar_endpoints.html">calendar_endpoints()</a></code> </p>
-        </td>
-        <td><p>List Calendar endpoints</p></td>
-      </tr>
-    </tbody><tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-programming-to-the-calendar-api" class="hasAnchor"><a href="#section-programming-to-the-calendar-api" class="anchor"></a>Programming to the Calendar API</h2>
-          <p class="section-desc"><p>Low-level functions used internally and made available for programming</p></p>
-        </th>
-      </tr>
-      <tr>
-        
-        <td>
-          <p><code><a href="request_generate.html">request_generate()</a></code> </p>
-        </td>
-        <td><p>Build a request for the Google Calendar API</p></td>
-      </tr>
-    </tbody><tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-no-longer-used" class="hasAnchor"><a href="#section-no-longer-used" class="anchor"></a>No longer used</h2>
-          <p class="section-desc"><p>These functions were available in earlier versions of the package but now deprecated</p></p>
-        </th>
-      </tr>
-      <tr>
-        
-        <td>
-          <p><code><a href="gcalendr-defunct.html">get_google_token()</a></code> <code><a href="gcalendr-defunct.html">get_gcal_list()</a></code> <code><a href="gcalendr-defunct.html">get_gcal_events()</a></code> </p>
-        </td>
-        <td><p>Functions that are no longer used.</p></td>
-      </tr>
-    </tbody>
-    </table>
+    <p>Logical.</p>
+    
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'>calendar_has_token</span>()</div><div class='output co'>#&gt; [1] FALSE</div></pre>
   </div>
-
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#section-read-a-google-calendar">Read a google calendar</a></li>
-      <li><a href="#section-authenticating">Authenticating</a></li>
-      <li><a href="#section-calendar-api-spec">Calendar API spec</a></li>
-      <li><a href="#section-programming-to-the-calendar-api">Programming to the Calendar API</a></li>
-      <li><a href="#section-no-longer-used">No longer used</a></li>
+      
+      <li><a href="#value">Value</a></li>
+      
+      <li><a href="#examples">Examples</a></li>
     </ul>
+
   </div>
 </div>
 

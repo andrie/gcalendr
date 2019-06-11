@@ -26,3 +26,5 @@ reference:
   desc: These functions were available in earlier versions of the package but now deprecated
   contents:
   - '`get_google_token`'
+  - '`get_gcal_list`'
+  - '`get_gcal_events`'

@@ -1,6 +1,10 @@
 #' Functions that are no longer used.
 #'
-#' Please use [calendar_auth()] and [calendar_token()] instead.
+#' These functions were available in a very early version of the package.
+#' Please use these replacement functions instead:
+#'  * [calendar_auth()] and [calendar_token()]
+#'  * [calendar_list()]
+#'  * [calendar_events()]
 #'
 #' @param google_app No longer used
 #' @rdname gcalendr-defunct
@@ -9,8 +13,6 @@ get_google_token <- function(google_app){
   .Defunct("calendar_token", package = "gcalendr")
 }
 
-#' Please use [calendar_list] instead.
-#'
 #' @inheritParams calendar_list
 #' @rdname gcalendr-defunct
 #' @export
@@ -18,8 +20,6 @@ get_gcal_list <- function(token = calendar_token()){
   .Defunct("calendar_list", package = "gcalendr")
 }
 
-#' Please use [calendar_events] instead.
-#'
 #' @inheritParams calendar_events
 #' @rdname gcalendr-defunct
 #' @export
