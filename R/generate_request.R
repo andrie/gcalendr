@@ -27,15 +27,15 @@ stop_glue <- function (..., .sep = "", .envir = parent.frame(), call. = FALSE,
 #'   * Adds an API key to the query if and only if `token = NULL`.
 #'
 #' @param endpoint Character. Nickname for one of the selected Calendar v3 API
-#'   endpoints built into `gcalendr`. Learn more in [gcalendr_endpoints()].
+#'   endpoints built into `gcalendr`. Learn more in [calendar_endpoints()].
 #'
 #' @param params Named list. Parameters destined for endpoint URL substitution,
 #'   the query, or the body.
 #'
 #'
 #' @param token Calendar token. Set to `NULL` to suppress the inclusion of a token.
-#'   Note that, if auth has been de-activated via [gcalendr_auth_config()],
-#'   `gcalendr_token()` will actually return `NULL`.
+#'   Note that, if auth has been de-activated via [calendar_auth_config()],
+#'   `calendar_token()` will actually return `NULL`.
 #'
 #' @return `list()`\cr Components are `method`, `path`, `query`, `body`,
 #'   `token`, and `url`, suitable as input for [request_make()].
@@ -49,13 +49,13 @@ stop_glue <- function (..., .sep = "", .envir = parent.frame(), call. = FALSE,
 #' req <- request_generate(
 #'   "drive.files.get",
 #'   list(fileId = "abc"),
-#'   token = gcalendr_token()
+#'   token = calendar_token()
 #' )
 #' req
 #' }
 request_generate <- function(endpoint = character(),
                              params = list(),
-                             token = gcalendr_token()) {
+                             token = calendar_token()) {
   ept <- .endpoints[[endpoint]]
   if (is.null(ept)) {
     stop_glue("\nEndpoint not recognized:\n  * {endpoint}")

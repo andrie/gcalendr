@@ -36,19 +36,20 @@ events:
 ``` r
 ## Set up google oauth permissions
 ## This will prompt you to specify an account
-gcalendr_auth()
+calendar_auth()
+```
 
-## To specify a specific account, provide your email address
-gcalendr_auth("apdevries@gmail.com")
-
+``` r
+## To specify a specific account, provide your account id, typically an email address
+calendar_auth("apdevries@gmail.com")
 
 ## Retrieve tibble of available calenders
-calendar_ids <- get_gcal_list()
+calendar_ids <- calendar_list()
 calendar_ids
 
 ## Retrieve tibble of events from a specific calendar
 
 my_cal_id <- "apdevries@gmail.com"
-events <- get_gcal_events(my_cal_id, days_in_past = 90, days_in_future = 90)
+events <- calendar_events(my_cal_id, days_in_past = 90, days_in_future = 90)
 events
 ```

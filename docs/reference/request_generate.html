@@ -146,7 +146,7 @@ and URL endpoint substitution (which is also enacted).</p></li>
     </div>
 
     <pre class="usage"><span class='fu'>request_generate</span>(<span class='kw'>endpoint</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/character'>character</a></span>(), <span class='kw'>params</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(),
-  <span class='kw'>token</span> <span class='kw'>=</span> <span class='fu'><a href='gcalendr_token.html'>gcalendr_token</a></span>())</pre>
+  <span class='kw'>token</span> <span class='kw'>=</span> <span class='fu'><a href='calendar_token.html'>calendar_token</a></span>())</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -154,7 +154,7 @@ and URL endpoint substitution (which is also enacted).</p></li>
     <tr>
       <th>endpoint</th>
       <td><p>Character. Nickname for one of the selected Calendar v3 API
-endpoints built into <code>gcalendr</code>. Learn more in <code><a href='gcalendr_endpoints.html'>gcalendr_endpoints()</a></code>.</p></td>
+endpoints built into <code>gcalendr</code>. Learn more in <code><a href='calendar_endpoints.html'>calendar_endpoints()</a></code>.</p></td>
     </tr>
     <tr>
       <th>params</th>
@@ -164,8 +164,8 @@ the query, or the body.</p></td>
     <tr>
       <th>token</th>
       <td><p>Calendar token. Set to <code>NULL</code> to suppress the inclusion of a token.
-Note that, if auth has been de-activated via <code><a href='gcalendr_auth_config.html'>gcalendr_auth_config()</a></code>,
-<code><a href='gcalendr_token.html'>gcalendr_token()</a></code> will actually return <code>NULL</code>.</p></td>
+Note that, if auth has been de-activated via <code><a href='calendar_auth_config.html'>calendar_auth_config()</a></code>,
+<code><a href='calendar_token.html'>calendar_token()</a></code> will actually return <code>NULL</code>.</p></td>
     </tr>
     </table>
     
@@ -177,7 +177,7 @@ Note that, if auth has been de-activated via <code><a href='gcalendr_auth_config
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='https://gargle.r-lib.org/reference/request_develop.html'>gargle::request_develop()</a></code>, <code><a href='https://gargle.r-lib.org/reference/request_develop.html'>gargle::request_build()</a></code></p>
-<p>Other low-level API functions: <code><a href='gcalendr_token.html'>gcalendr_token</a></code></p></div>
+<p>Other low-level API functions: <code><a href='calendar_token.html'>calendar_token</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -185,7 +185,7 @@ Note that, if auth has been de-activated via <code><a href='gcalendr_auth_config
 <span class='no'>req</span> <span class='kw'>&lt;-</span> <span class='fu'>request_generate</span>(
   <span class='st'>"drive.files.get"</span>,
   <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>fileId</span> <span class='kw'>=</span> <span class='st'>"abc"</span>),
-  <span class='kw'>token</span> <span class='kw'>=</span> <span class='fu'><a href='gcalendr_token.html'>gcalendr_token</a></span>()
+  <span class='kw'>token</span> <span class='kw'>=</span> <span class='fu'><a href='calendar_token.html'>calendar_token</a></span>()
 )
 <span class='no'>req</span>
 <span class='co'># }</span></pre>

@@ -11,13 +11,13 @@ You can read Google calendar data using the  Google Calendar API
 \details{
 Access your calendar:
 \itemize{
-\item \code{\link[=get_gcal_list]{get_gcal_list()}}
-\item \code{\link[=get_gcal_events]{get_gcal_events()}}
+\item \code{\link[=calendar_list]{calendar_list()}}
+\item \code{\link[=calendar_events]{calendar_events()}}
 }
 
 Authenticate
 \itemize{
-\item \code{\link[=gcalendr_auth]{gcalendr_auth()}}
-\item \code{\link[=gcalendr_token]{gcalendr_token()}}
+\item \code{\link[=calendar_auth]{calendar_auth()}}
+\item \code{\link[=calendar_token]{calendar_token()}}
 }
 }

@@ -8,16 +8,16 @@ if (gargle:::secret_can_decrypt("gcalendr")) {
     my_cal_id <- "apdevries@gmail.com"
 
     token <- gargle:::secret_read("gcalendr", "gmail-token")
-    gcalendr_auth("apdevries@gmail.com", path = rawToChar(token))
+    calendar_auth("apdevries@gmail.com", path = rawToChar(token))
 
-    expect_true(gcalendr_has_token())
+    expect_true(calendar_has_token())
 
-    calendar_ids <- get_gcal_list()
+    calendar_ids <- calendar_list()
     expect_is(calendar_ids, "data.frame")
     expect_equal(ncol(calendar_ids), 3)
 
 
-    events <- get_gcal_events(my_cal_id,
+    events <- calendar_events(my_cal_id,
                               days_in_past = 90,
                               days_in_future = 90,
                               now = as.Date("2019-01-01"),
@@ -50,7 +50,7 @@ if (gargle:::secret_can_decrypt("gcalendr")) {
     expect_equal(ncol(organizer), 4)
 
     expect_null(
-      gcalendr_deauth()
+      calendar_deauth()
     )
 
   })

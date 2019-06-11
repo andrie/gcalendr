@@ -5,18 +5,18 @@
 \title{Build a request for the Google Calendar API}
 \usage{
 request_generate(endpoint = character(), params = list(),
-  token = gcalendr_token())
+  token = calendar_token())
 }
 \arguments{
 \item{endpoint}{Character. Nickname for one of the selected Calendar v3 API
-endpoints built into \code{gcalendr}. Learn more in \code{\link[=gcalendr_endpoints]{gcalendr_endpoints()}}.}
+endpoints built into \code{gcalendr}. Learn more in \code{\link[=calendar_endpoints]{calendar_endpoints()}}.}
 
 \item{params}{Named list. Parameters destined for endpoint URL substitution,
 the query, or the body.}
 
 \item{token}{Calendar token. Set to \code{NULL} to suppress the inclusion of a token.
-Note that, if auth has been de-activated via \code{\link[=gcalendr_auth_config]{gcalendr_auth_config()}},
-\code{gcalendr_token()} will actually return \code{NULL}.}
+Note that, if auth has been de-activated via \code{\link[=calendar_auth_config]{calendar_auth_config()}},
+\code{calendar_token()} will actually return \code{NULL}.}
 }
 \value{
 \code{list()}\cr Components are \code{method}, \code{path}, \code{query}, \code{body},
@@ -45,7 +45,7 @@ and URL endpoint substitution (which is also enacted).
 req <- request_generate(
   "drive.files.get",
   list(fileId = "abc"),
-  token = gcalendr_token()
+  token = calendar_token()
 )
 req
 }
@@ -53,6 +53,6 @@ req
 \seealso{
 \code{\link[gargle:request_develop]{gargle::request_develop()}}, \code{\link[gargle:request_build]{gargle::request_build()}}
 
-Other low-level API functions: \code{\link{gcalendr_token}}
+Other low-level API functions: \code{\link{calendar_token}}
 }
 \concept{low-level API functions}

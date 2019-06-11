@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Defunct. — get_google_token • gcalendr</title>
+<title>Functions that are no longer used. — get_google_token • gcalendr</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -37,9 +37,14 @@
 
 
 
-<meta property="og:title" content="Defunct. — get_google_token" />
+<meta property="og:title" content="Functions that are no longer used. — get_google_token" />
 
-<meta property="og:description" content="Please use gcalendr_auth() and gcalendr_token() instead." />
+<meta property="og:description" content="These functions were available in a very early version of the package.
+Please use these replacement functions instead:
+calendar_auth() and calendar_token()
+calendar_list()
+calendar_events()
+" />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -108,18 +113,28 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Defunct.</h1>
-    <small class="dont-index">Source: <a href='https://github.com/andrie/gcalendr/blob/master/R/authenticate.R'><code>R/authenticate.R</code></a></small>
+    <h1>Functions that are no longer used.</h1>
+    <small class="dont-index">Source: <a href='https://github.com/andrie/gcalendr/blob/master/R/defunct.R'><code>R/defunct.R</code></a></small>
     <div class="hidden name"><code>gcalendr-defunct.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Please use <code><a href='gcalendr_auth.html'>gcalendr_auth()</a></code> and <code><a href='gcalendr_token.html'>gcalendr_token()</a></code> instead.</p>
+    <p>These functions were available in a very early version of the package.
+Please use these replacement functions instead:</p><ul>
+<li><p><code><a href='calendar_auth.html'>calendar_auth()</a></code> and <code><a href='calendar_token.html'>calendar_token()</a></code></p></li>
+<li><p><code><a href='calendar_list.html'>calendar_list()</a></code></p></li>
+<li><p><code><a href='calendar_events.html'>calendar_events()</a></code></p></li>
+</ul>
     
     </div>
 
-    <pre class="usage"><span class='fu'>get_google_token</span>(<span class='no'>google_app</span>)</pre>
+    <pre class="usage"><span class='fu'>get_google_token</span>(<span class='no'>google_app</span>)
+
+<span class='fu'>get_gcal_list</span>(<span class='kw'>token</span> <span class='kw'>=</span> <span class='fu'><a href='calendar_token.html'>calendar_token</a></span>())
+
+<span class='fu'>get_gcal_events</span>(<span class='no'>id</span>, <span class='kw'>token</span> <span class='kw'>=</span> <span class='fu'><a href='calendar_token.html'>calendar_token</a></span>(), <span class='kw'>days_in_past</span> <span class='kw'>=</span> <span class='fl'>90</span>,
+  <span class='kw'>days_in_future</span> <span class='kw'>=</span> <span class='fl'>90</span>, <span class='kw'>now</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Sys.time'>Sys.Date</a></span>(), <span class='kw'>max_results</span> <span class='kw'>=</span> <span class='fl'>250</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -127,6 +142,32 @@
     <tr>
       <th>google_app</th>
       <td><p>No longer used</p></td>
+    </tr>
+    <tr>
+      <th>token</th>
+      <td><p>token obtained from <code><a href='calendar_token.html'>calendar_token()</a></code></p></td>
+    </tr>
+    <tr>
+      <th>id</th>
+      <td><p>calendar id, obtained from <code><a href='calendar_list.html'>calendar_list()</a></code></p></td>
+    </tr>
+    <tr>
+      <th>days_in_past</th>
+      <td><p>Restrict results to date range, number of days in past</p></td>
+    </tr>
+    <tr>
+      <th>days_in_future</th>
+      <td><p>Restrict results to date range, number of days into
+future</p></td>
+    </tr>
+    <tr>
+      <th>now</th>
+      <td><p>Reference time stamp, defaulting to <code><a href='https://www.rdocumentation.org/packages/base/topics/Sys.time'>Sys.time()</a></code></p></td>
+    </tr>
+    <tr>
+      <th>max_results</th>
+      <td><p>Used internally to specify the maximum number of results
+retrieved per "page" of the query.</p></td>
     </tr>
     </table>
     

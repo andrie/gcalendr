@@ -1,4 +1,4 @@
-call_gcal_api <- function(id, token = gcalendr_token(), time_min, time_max, max_results = 250){
+call_gcal_api <- function(id, token = calendar_token(), time_min, time_max, max_results = 250){
   # api = "https://www.googleapis.com/calendar/v3/calendars"
 
   time_min <- strftime(time_min, tz = "UTC", "%Y-%m-%dT%H:%M:00Z")
@@ -60,9 +60,9 @@ call_gcal_api <- function(id, token = gcalendr_token(), time_min, time_max, max_
 #'
 #' To unnest these columns, use [tidyr::unnest()]
 #'
-#' @inheritParams get_gcal_list
+#' @inheritParams calendar_list
 #'
-#' @param id calendar id, obtained from [get_gcal_list()]
+#' @param id calendar id, obtained from [calendar_list()]
 #' @param days_in_past Restrict results to date range, number of days in past
 #' @param days_in_future Restrict results to date range, number of days into
 #'   future
@@ -74,7 +74,7 @@ call_gcal_api <- function(id, token = gcalendr_token(), time_min, time_max, max_
 #'   https://developers.google.com/google-apps/calendar/v3/reference/events/list
 #' @family calendar functions
 #' @export
-get_gcal_events <- function(id, token = gcalendr_token(),
+calendar_events <- function(id, token = calendar_token(),
                             days_in_past = 90, days_in_future = 90,
                             now = Sys.Date(), max_results = 250){
   message("Reading calendar ", id)
