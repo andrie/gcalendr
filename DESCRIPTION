@@ -1,7 +1,7 @@
 Package: gcalendr
 Type: Package
 Title: Read Events From Google Calendar
-Version: 0.2.0.9000
+Version: 0.2.1.9000
 Authors@R: 
     c(person("Andrie", 
         "de Vries", 
