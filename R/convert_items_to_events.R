@@ -1,13 +1,14 @@
 utils::globalVariables(
   c("start", "end", "summary", "location", ".",
-    "start_datetime", "start_timezone", "end_datetime", "end_timezone"))
+    "start_datetime", "start_timezone", "end_datetime", "end_timezone",
+    "start_date", "end_date"))
 
 transform_or_na <- function(df, varname, fn = as_date) {
   if (varname %in% names(df)) df %>% dplyr::pull(!!varname) %>% fn() else fn(NA)
 }
 
 
-# -------------------------------------------------------------------------
+# - extract_attendees -----------------------------------------------------
 
 
 extract_attendees <- function(items){
@@ -41,8 +42,7 @@ extract_attendees <- function(items){
 }
 
 
-# -------------------------------------------------------------------------
-
+# - extract_creator -------------------------------------------------------
 
 extract_creator <- function(items){
 z <-
@@ -62,6 +62,9 @@ z <-
   if (nrow(z) != length(items)) warning("Incorrect number of rows in creator")
   z
 }
+
+
+# extract_organizer -------------------------------------------------------
 
 extract_organizer <- function(items){
   z <-
@@ -85,7 +88,7 @@ extract_organizer <- function(items){
 
 
 
-# -------------------------------------------------------------------------
+# - extract_simple_columns ------------------------------------------------
 
 extract_simple_columns <- function(items){
   items %>%
@@ -99,10 +102,15 @@ extract_simple_columns <- function(items){
       updated                     = .[["updated"]] %||% NA,
       summary                     = .[["summary"]] %||% NA,
       location                    = .[["location"]] %||% NA,
+
+      start_date                 = .[["start"]][["date"]] %||% NA,
       start_datetime             = .[["start"]][["dateTime"]] %||% NA,
       start_timezone             = .[["start"]][["timeZone"]] %||% NA,
+
+      end_date                   = .[["start"]][["date"]] %||% NA,
       end_datetime               = .[["end"]][["dateTime"]] %||% NA,
       end_timezone               = .[["end"]][["timeZone"]] %||% NA,
+
       # recurrence                  = .[["recurrence"]] %||% NA,
       ical_uid                    = .[["iCalUID"]] %||% NA,
       sequence                    = .[["sequence"]] %||% NA,
@@ -128,7 +136,6 @@ extract_simple_columns <- function(items){
       creator_display_name        = .[["creator"]][["displayName"]] %||% NA_character_,
       creator_self                = .[["creator"]][["self"]]        %||% NA
 
-
       # source                      = .[["source"]] %||% NA,
       # attachments                 = .[["attachment"]] %||% NA,
     )) %>%
@@ -140,26 +147,33 @@ extract_simple_columns <- function(items){
       end_datetime,
       end_timezone,
       dplyr::everything()
+    ) %>%
+    mutate(
+      created        = transform_or_na(., "created", as_datetime),
+      updated        = transform_or_na(., "updated", as_datetime),
+      start_date     = transform_or_na(., "start_date", as.Date),
+      start_date     = if_else(is.na(start_date), as.Date(start_datetime), start_date),
+      end_date       = transform_or_na(., "end_date", as.Date),
+      end_date       = if_else(is.na(end_date), as.Date(end_datetime), end_date),
+      start_datetime = transform_or_na(., "start_datetime", as_datetime),
+      end_datetime   = transform_or_na(., "end_datetime", as_datetime)
     )
+
 }
 
 
-# -------------------------------------------------------------------------
+# - convert_items_to events -----------------------------------------------
 
 #' @importFrom dplyr inner_join
 convert_items_to_events <- function(items){
 
   events <- extract_simple_columns(items)
 
-  # if(length(items) != nrow(events)) stop("Incorrect number of events after initial extract")
-
-
-
   attendees <- extract_attendees(items)
   organizer <- extract_organizer(items)
   creator   <- extract_creator(items)
 
-  z <- if (all(
+  if (all(
     all.equal(items %>% map_chr("id"), attendees$id),
     all.equal(items %>% map_chr("id"), organizer$id),
     all.equal(items %>% map_chr("id"), creator$id)
@@ -167,25 +181,12 @@ convert_items_to_events <- function(items){
     bind_cols(
       events,
       attendees[, "attendees"]
-      # organizer[, "organizer"],
-      # creator[, "creator"]
     )
   } else {
     warning ("Incorrect number of rows")
     events %>%
       left_join(attendees, by = "id")
-      # inner_join(creator, by = "id") %>%
-      # inner_join(organizer, by = "id")
   }
 
 
-  z %>%
-    mutate(
-      created        = transform_or_na(., "created", as_datetime),
-      updated        = transform_or_na(., "updated", as_datetime),
-      start_date     = transform_or_na(., "start_date", as.Date),
-      end_date       = transform_or_na(., "end_date", as.Date),
-      start_datetime = transform_or_na(., "start_datetime", as_datetime),
-      end_datetime   = transform_or_na(., "end_datetime", as_datetime)
-    )
 }

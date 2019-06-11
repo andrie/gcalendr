@@ -11,7 +11,8 @@ call_calendar_events <- function(id, token = calendar_token(), time_min, time_ma
       timeMin = time_min,
       timeMax = time_max,
       calendarId = id,
-      maxResults = max_results
+      maxResults = max_results,
+      singleEvents = TRUE
     )
   )
   r <- request_make(req)
