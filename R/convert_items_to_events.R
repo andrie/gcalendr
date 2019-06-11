@@ -35,7 +35,11 @@ convert_items_to_events <- function(items){
       guests_can_invite_others    = .[["guestsCanInviteOthers"]] %||% NA,
       private_copy                = .[["privateCopy"]] %||% NA,
       source                      = .[["source"]] %||% NA,
-      attachments                 = .[["attachment"]] %||% NA
+      attachments                 = .[["attachment"]] %||% NA,
+      start_datetime             = .[["start"]][["dateTime"]] %||% NA,
+      start_timezone             = .[["start"]][["timeZone"]] %||% NA,
+      end_datetime               = .[["end"]][["dateTime"]] %||% NA,
+      end_timezone               = .[["end"]][["timeZone"]] %||% NA
     )) %>%
     select(
       summary,
@@ -45,6 +49,16 @@ convert_items_to_events <- function(items){
       dplyr::everything()
     )
 
+  attendee_tibble <- function(x){
+    tibble(
+      email           = x[["email"]]                     %||% NA_character_,
+      response_status = x[["responseStatus"]]            %||% NA_character_,
+      organizer       = x[["organizer"]]                 %||% NA,
+      optional        = x[["optional"]]                  %||% NA,
+      display_name    = x[["displayName"]]               %||% NA_character_,
+      self            = x[["self"]]                      %||% NA
+    )
+  }
 
   attendees <-
     items %>%
@@ -54,14 +68,7 @@ convert_items_to_events <- function(items){
         attendees = list(
           pluck(., "attendees") %>%
             map_dfr(
-              ~tibble(
-                email           = .[["email"]]                     %||% NA_character_,
-                response_status = .[["responseStatus"]]            %||% NA_character_,
-                organizer       = as.character(.[["organizer"]])   %||% NA_character_,
-                optional        = .[["optional"]]                  %||% NA,
-                display_name    = as.character(.[["displayName"]]) %||% NA_character_,
-                self            = .[["self"]]                      %||% NA
-              )
+              attendee_tibble
             )
         )
       )
@@ -108,7 +115,7 @@ convert_items_to_events <- function(items){
       updated        = transform_or_na(., "updated", as_datetime),
       start_date     = transform_or_na(., "start_date", as.Date),
       end_date       = transform_or_na(., "end_date", as.Date),
-      start_dateTime = transform_or_na(., "start_dateTime", as_datetime),
-      end_dateTime   = transform_or_na(., "end_dateTime", as_datetime)
+      start_datetime = transform_or_na(., "start_datetime", as_datetime),
+      end_datetime   = transform_or_na(., "end_datetime", as_datetime)
     )
 }
