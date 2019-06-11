@@ -6,7 +6,11 @@ expect_defunct <- function(expr, message){
     error = function(e)e,
     message = function(m)m
   )
-  expect_is(z, "defunctError")
+  if (getRversion() > "3.5.3") {
+    expect_is(z, "defunctError")
+  } else {
+    expect_is(z, "simpleError")
+  }
   expect_match(z$message, message)
 }
 
