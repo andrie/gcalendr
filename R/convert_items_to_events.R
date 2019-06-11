@@ -1,54 +1,16 @@
-utils::globalVariables(c("start", "end", "summary", "location", "."))
+utils::globalVariables(
+  c("start", "end", "summary", "location", ".",
+    "start_datetime", "start_timezone", "end_datetime", "end_timezone"))
 
 transform_or_na <- function(df, varname, fn = as_date) {
   if (varname %in% names(df)) df %>% dplyr::pull(!!varname) %>% fn() else fn(NA)
 }
 
 
-convert_items_to_events <- function(items){
+# -------------------------------------------------------------------------
 
-  events <- items %>%
-    map_dfr(~tibble(
-      kind                        = .[["kind"]] %||% NA,
-      etag                        = .[["etag"]] %||% NA,
-      id                          = .[["id"]] %||% NA,
-      status                      = .[["status"]] %||% NA,
-      html_link                   = .[["htmlLink"]] %||% NA,
-      created                     = .[["created"]] %||% NA,
-      updated                     = .[["updated"]] %||% NA,
-      summary                     = .[["summary"]] %||% NA,
-      location                    = .[["location"]] %||% NA,
-      start                       = .[["start"]] %||% NA,
-      end                         = .[["end"]] %||% NA,
-      recurrence                  = .[["recurrence"]] %||% NA,
-      ical_uid                    = .[["iCalUID"]] %||% NA,
-      sequence                    = .[["sequence"]] %||% NA,
-      extended_properties         = .[["extendedProperties"]] %||% NA,
-      reminders                   = .[["reminders"]] %||% NA,
-      description                 = .[["description"]] %||% NA,
-      recurring_event_id          = .[["recurringEventId"]] %||% NA,
-      original_start_time         = .[["originalStartTime"]] %||% NA,
-      transparency                = .[["transparency"]] %||% NA,
-      guests_can_modify           = .[["guestsCanModify"]] %||% NA,
-      visibility                  = .[["visibility"]] %||% NA,
-      guests_can_see_other_guests = .[["guestsCanSeeOtherGuests"]] %||% NA,
-      guests_can_invite_others    = .[["guestsCanInviteOthers"]] %||% NA,
-      private_copy                = .[["privateCopy"]] %||% NA,
-      source                      = .[["source"]] %||% NA,
-      attachments                 = .[["attachment"]] %||% NA,
-      start_datetime             = .[["start"]][["dateTime"]] %||% NA,
-      start_timezone             = .[["start"]][["timeZone"]] %||% NA,
-      end_datetime               = .[["end"]][["dateTime"]] %||% NA,
-      end_timezone               = .[["end"]][["timeZone"]] %||% NA
-    )) %>%
-    select(
-      summary,
-      location,
-      start,
-      end,
-      dplyr::everything()
-    )
 
+extract_attendees <- function(items){
   attendee_tibble <- function(x){
     tibble(
       email           = x[["email"]]                     %||% NA_character_,
@@ -60,7 +22,7 @@ convert_items_to_events <- function(items){
     )
   }
 
-  attendees <-
+  z <-
     items %>%
     map_dfr(
       ~tibble(
@@ -74,42 +36,131 @@ convert_items_to_events <- function(items){
       )
     )
 
+  if (nrow(z) != length(items)) warning("Incorrect number of rows in attendees")
+  z
+}
 
-  creator <-
-    items %>%
-    map_dfr(
-      ~tibble(
-        id = pluck(., "id"),
-        creator = list(
-          tibble(
-            email        = .[["creator"]][["email"]]       %||% NA_character_,
-            display_name = .[["creator"]][["displayName"]] %||% NA_character_,
-            self         = .[["creator"]][["self"]]        %||% NA
-          )
+
+# -------------------------------------------------------------------------
+
+
+extract_creator <- function(items){
+z <-
+  items %>%
+  map_dfr(
+    ~tibble(
+      id = pluck(., "id"),
+      creator = list(
+        tibble(
+          email        = .[["creator"]][["email"]]       %||% NA_character_,
+          display_name = .[["creator"]][["displayName"]] %||% NA_character_,
+          self         = .[["creator"]][["self"]]        %||% NA
         )
       )
     )
+  )
+  if (nrow(z) != length(items)) warning("Incorrect number of rows in creator")
+  z
+}
 
-  organizer <-
-    items %>%
-    map_dfr(
-      ~tibble(
-        id = pluck(., "id"),
-        organizer = list(
-          tibble(
-            email        = .[["organizer"]][["email"]]       %||% NA_character_,
-            display_name = .[["organizer"]][["displayName"]] %||% NA_character_,
-            self         = .[["organizer"]][["self"]]        %||% NA
-          )
+extract_organizer <- function(items){
+  z <-
+  items %>%
+  map_dfr(
+    ~tibble(
+      id = pluck(., "id"),
+      organizer = list(
+        tibble(
+          email        = .[["organizer"]][["email"]]       %||% NA_character_,
+          display_name = .[["organizer"]][["displayName"]] %||% NA_character_,
+          self         = .[["organizer"]][["self"]]        %||% NA
         )
       )
     )
+  )
+  if (nrow(z) != length(items)) warning("Incorrect number of rows in organizer")
+  z
 
-  events %>%
-    # select(-one_of(c("attendees", "creator", "organizer"))) %>%
-    left_join(attendees, by = "id") %>%
-    left_join(creator, by = "id") %>%
-    left_join(organizer, by = "id") %>%
+}
+
+
+# -------------------------------------------------------------------------
+
+#' @importFrom dplyr inner_join
+convert_items_to_events <- function(items){
+
+  events <- items %>%
+    map_dfr(~tibble(
+      kind                        = .[["kind"]] %||% NA,
+      etag                        = .[["etag"]] %||% NA,
+      id                          = .[["id"]] %||% NA,
+      status                      = .[["status"]] %||% NA,
+      html_link                   = .[["htmlLink"]] %||% NA,
+      created                     = .[["created"]] %||% NA,
+      updated                     = .[["updated"]] %||% NA,
+      summary                     = .[["summary"]] %||% NA,
+      location                    = .[["location"]] %||% NA,
+      start_datetime             = .[["start"]][["dateTime"]] %||% NA,
+      start_timezone             = .[["start"]][["timeZone"]] %||% NA,
+      end_datetime               = .[["end"]][["dateTime"]] %||% NA,
+      end_timezone               = .[["end"]][["timeZone"]] %||% NA,
+      # recurrence                  = .[["recurrence"]] %||% NA,
+      ical_uid                    = .[["iCalUID"]] %||% NA,
+      sequence                    = .[["sequence"]] %||% NA,
+      # extended_properties         = .[["extendedProperties"]] %||% NA,
+      # reminders                   = .[["reminders"]] %||% NA,
+      description                 = .[["description"]] %||% NA,
+      recurring_event_id          = .[["recurringEventId"]] %||% NA,
+      original_start_datetime     = .[["originalStartTime"]][["dateTime"]] %||% NA,
+      original_start_timezone     = .[["originalStartTime"]][["timeZone"]] %||% NA,
+      transparency                = .[["transparency"]] %||% NA,
+      guests_can_modify           = .[["guestsCanModify"]] %||% NA,
+      visibility                  = .[["visibility"]] %||% NA,
+      guests_can_see_other_guests = .[["guestsCanSeeOtherGuests"]] %||% NA,
+      guests_can_invite_others    = .[["guestsCanInviteOthers"]] %||% NA,
+      private_copy                = .[["privateCopy"]] %||% NA
+      # source                      = .[["source"]] %||% NA,
+      # attachments                 = .[["attachment"]] %||% NA,
+    )) %>%
+    select(
+      summary,
+      location,
+      start_datetime,
+      start_timezone,
+      end_datetime,
+      end_timezone,
+      dplyr::everything()
+    )
+
+  # if(length(items) != nrow(events)) stop("Incorrect number of events after initial extract")
+
+
+
+  attendees <- extract_attendees(items)
+  organizer <- extract_organizer(items)
+  creator   <- extract_creator(items)
+
+  z <- if (all(
+    all.equal(items %>% map_chr("id"), attendees$id),
+    all.equal(items %>% map_chr("id"), organizer$id),
+    all.equal(items %>% map_chr("id"), creator$id)
+  )) {
+    bind_cols(
+      events,
+      attendees[, "attendees"],
+      organizer[, "organizer"],
+      creator[, "creator"]
+    )
+  } else {
+    warning ("Incorrect number of rows")
+    events %>%
+      left_join(attendees, by = "id") %>%
+      inner_join(creator, by = "id") %>%
+      inner_join(organizer, by = "id")
+  }
+
+
+  z %>%
     mutate(
       created        = transform_or_na(., "created", as_datetime),
       updated        = transform_or_na(., "updated", as_datetime),

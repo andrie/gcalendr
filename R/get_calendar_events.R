@@ -1,4 +1,4 @@
-call_gcal_api <- function(id, token = calendar_token(), time_min, time_max, max_results = 250){
+call_calendar_events <- function(id, token = calendar_token(), time_min, time_max, max_results = 250){
   # api = "https://www.googleapis.com/calendar/v3/calendars"
 
   time_min <- strftime(time_min, tz = "UTC", "%Y-%m-%dT%H:%M:00Z")
@@ -81,7 +81,7 @@ calendar_events <- function(id, token = calendar_token(),
   time_min <- now - days_in_past
   time_max <- now + days_in_future
 
-  items <- call_gcal_api(
+  items <- call_calendar_events(
     id = id,
     token = token,
     time_min = time_min,
