@@ -17,10 +17,10 @@
 #' @export
 #'
 #' @examples
-#' str(gcalendr_endpoints(), max.level = 2)
-#' gcalendr_endpoints("calendar.events.list")
-#' gcalendr_endpoints(4)
-gcalendr_endpoints <- function(i = NULL) {
+#' str(calendar_endpoints(), max.level = 2)
+#' calendar_endpoints("calendar.events.list")
+#' calendar_endpoints(4)
+calendar_endpoints <- function(i = NULL) {
   is_expose <- function(x) inherits(x, "expose")
   if (is.null(i) || is_expose(i)) {
     i <- seq_along(.endpoints)

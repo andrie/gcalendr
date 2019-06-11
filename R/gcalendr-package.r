@@ -4,13 +4,13 @@
 #'
 #' Access your calendar:
 #'
-#' * [get_gcal_list()]
-#' * [get_gcal_events()]
+#' * [calendar_list()]
+#' * [calendar_events()]
 #'
 #' Authenticate
 #'
-#' * [gcalendr_auth()]
-#' * [gcalendr_token()]
+#' * [calendar_auth()]
+#' * [calendar_token()]
 #'
 #' @name gcalendr
 #' @aliases gcalendr-package

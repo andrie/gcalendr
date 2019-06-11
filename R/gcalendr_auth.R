@@ -1,7 +1,7 @@
 # This file is the interface between gcalendr and the auth functionality in
 # gargle.
 
-gcalendr_app <- function() {
+calendar_app <- function() {
   oauth_app(
     appname = 'gcalendr-package',
     key = paste0("939459484985-fn7q750sdkpmi9a76jn8a1rtug84q5ss",
@@ -12,7 +12,7 @@ gcalendr_app <- function() {
 
 .auth <- gargle::init_AuthState(
   package     = "gcalendr",
-  app         = gcalendr_app(),     # YOUR PKG SHOULD USE ITS OWN APP!
+  app         = calendar_app(),     # YOUR PKG SHOULD USE ITS OWN APP!
   api_key     = NULL, # YOUR PKG SHOULD USE ITS OWN KEY!
   auth_active = TRUE
 )
@@ -24,7 +24,7 @@ gargle_lookup_table <- list(
   YOUR_STUFF  = "your calendar events",
   PRODUCT     = "Google Calendar",
   API         = "Calendar API",
-  PREFIX      = "gcalendr",
+  PREFIX      = "calendar",
   AUTH_CONFIG_SOURCE = "gcalendr-package"
 )
 
@@ -41,28 +41,28 @@ gargle_lookup_table <- list(
 #' \dontrun{
 #' ## load/refresh existing credentials, if available
 #' ## otherwise, go to browser for authentication and authorization
-#' gcalendr_auth()
+#' calendar_auth()
 #'
 #' ## see user associated with current token
-#' gcalendr_user()
+#' calendar_user()
 #'
 #' ## force use of a token associated with a specific email
-#' gcalendr_auth(email = "jenny@example.com")
-#' gcalendr_user()
+#' calendar_auth(email = "jenny@example.com")
+#' calendar_user()
 #'
 #' ## force a menu where you can choose from existing tokens or
 #' ## choose to get a new one
-#' gcalendr_auth(email = NA)
+#' calendar_auth(email = NA)
 #'
 #' ## use a 'read only' scope, so it's impossible to edit or delete files
-#' gcalendr_auth(
+#' calendar_auth(
 #'   scopes = "https://www.googleapis.com/auth/calendar.readonly"
 #' )
 #'
 #' ## use a service account token
-#' gcalendr_auth(path = "foofy-83ee9e7c9c48.json")
+#' calendar_auth(path = "foofy-83ee9e7c9c48.json")
 #' }
-gcalendr_auth <- function(
+calendar_auth <- function(
   email = NULL,
   path = NULL,
   scopes = "https://www.googleapis.com/auth/calendar.readonly",
@@ -72,7 +72,7 @@ gcalendr_auth <- function(
 {
   cred <- gargle::token_fetch(
     scopes = scopes,
-    app = gcalendr_oauth_app(),
+    app = calendar_oauth_app(),
     email = email,
     path = path,
     package = "gcalendr",
@@ -84,8 +84,8 @@ gcalendr_auth <- function(
     stop(
       "Can't get Google credentials.\n",
       "Are you running gcalendr in a non-interactive session? Consider:\n",
-      "  * `gcalendr_deauth()` to prevent the attempt to get credentials.\n",
-      "  * Call `gcalendr_auth()` directly with all necessary specifics.\n",
+      "  * `calendar_deauth()` to prevent the attempt to get credentials.\n",
+      "  * Call `calendar_auth()` directly with all necessary specifics.\n",
       call. = FALSE
     )
   }
@@ -103,13 +103,13 @@ gcalendr_auth <- function(
 #' @export
 #' @examples
 #' \dontrun{
-#' gcalendr_deauth()
-#' gcalendr_user()
+#' calendar_deauth()
+#' calendar_user()
 #' public_file <-
-#'   gcalendr_get(as_id("1Hj-k7NpPSyeOR3R7j4KuWnru6kZaqqOAE8_db5gowIM"))
-#' gcalendr_download(public_file)
+#'   calendar_get(as_id("1Hj-k7NpPSyeOR3R7j4KuWnru6kZaqqOAE8_db5gowIM"))
+#' calendar_download(public_file)
 #' }
-gcalendr_deauth <- function() {
+calendar_deauth <- function() {
   .auth$set_auth_active(FALSE)
   .auth$set_cred(NULL)
   invisible()
@@ -127,16 +127,16 @@ gcalendr_deauth <- function() {
 #' req <- request_generate(
 #'   "drive.files.get",
 #'   list(fileId = "abc"),
-#'   token = gcalendr_token()
+#'   token = calendar_token()
 #' )
 #' req
 #' }
-gcalendr_token <- function() {
+calendar_token <- function() {
   if (isFALSE(.auth$auth_active)) {
     return(NULL)
   }
-  if (!gcalendr_has_token()) {
-    gcalendr_auth()
+  if (!calendar_has_token()) {
+    calendar_auth()
   }
   httr::config(token = .auth$cred)
 }
@@ -151,8 +151,8 @@ gcalendr_token <- function() {
 #' @export
 #'
 #' @examples
-#' gcalendr_has_token()
-gcalendr_has_token <- function() {
+#' calendar_has_token()
+calendar_has_token <- function() {
   inherits(.auth$cred, "Token2.0")
 }
 
@@ -165,7 +165,7 @@ gcalendr_has_token <- function() {
 #' @export
 #' @examples
 #' ## this will print current config
-#' gcalendr_auth_config()
+#' calendar_auth_config()
 #'
 #' \dontrun{
 #' if (require(httr)) {
@@ -175,16 +175,16 @@ gcalendr_has_token <- function() {
 #'     key = "123456789.apps.googleusercontent.com",
 #'     secret = "abcdefghijklmnopqrstuvwxyz"
 #'   )
-#'   gcalendr_auth_config(app = google_app)
+#'   calendar_auth_config(app = google_app)
 #' }
 #'
 #' ## bring your own app via JSON downloaded from Google Developers Console
-#' gcalendr_auth_config(
+#' calendar_auth_config(
 #'   path = "/path/to/the/JSON/you/downloaded/from/google/dev/console.json"
 #' )
 #' }
 #'
-gcalendr_auth_config <- function(
+calendar_auth_config <- function(
   app = NULL,
   path = NULL
 )
@@ -208,5 +208,5 @@ gcalendr_auth_config <- function(
 
 
 #' @export
-#' @rdname gcalendr_auth_config
-gcalendr_oauth_app <- function() .auth$app
+#' @rdname calendar_auth_config
+calendar_oauth_app <- function() .auth$app
