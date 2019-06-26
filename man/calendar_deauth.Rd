@@ -2,30 +2,26 @@
 % Please edit documentation in R/gcalendr_auth.R
 \name{calendar_deauth}
 \alias{calendar_deauth}
-\title{Suspend authorization}
+\title{Clear current token}
 \usage{
 calendar_deauth()
 }
 \description{
-Put gcalendr into a de-authorized state. Instead of sending a token,
-gcalendr will send an API key. This can be used to access public
-resources for which no Google sign-in is required. This is handy for using
-gcalendr in a non-interactive setting to make requests that do not
-require a token. It will prevent the attempt to obtain a token
-interactively in the browser. A built-in API key is used by default or
-the user can configure their own via \code{\link[=calendar_auth_config]{calendar_auth_config()}}.
+Clears any currently stored token. The next time gcalendr needs a token, the
+token acquisition process starts over, with a fresh call to \code{\link[=calendar_auth]{calendar_auth()}}
+and, therefore, internally, a call to \code{\link[gargle:token_fetch]{gargle::token_fetch()}}. Unlike some
+other packages that use gargle, gcalendr is not usable in a de-authorized
+state. Therefore, calling \code{calendar_deauth()} only clears the token, i.e. it
+does NOT imply that subsequent requests are made with an API key in lieu of a
+token.
 }
 \examples{
 \dontrun{
 calendar_deauth()
-calendar_user()
-public_file <-
-  calendar_get(as_id("1Hj-k7NpPSyeOR3R7j4KuWnru6kZaqqOAE8_db5gowIM"))
-calendar_download(public_file)
 }
 }
 \seealso{
-Other auth functions: \code{\link{calendar_auth_config}},
+Other auth functions: \code{\link{calendar_auth_configure}},
   \code{\link{calendar_auth}}
 }
 \concept{auth functions}
