@@ -7,13 +7,13 @@
 calendar_deauth()
 }
 \description{
-Clears any currently stored token. The next time gcalendr needs a token, the
-token acquisition process starts over, with a fresh call to \code{\link[=calendar_auth]{calendar_auth()}}
-and, therefore, internally, a call to \code{\link[gargle:token_fetch]{gargle::token_fetch()}}. Unlike some
-other packages that use gargle, gcalendr is not usable in a de-authorized
-state. Therefore, calling \code{calendar_deauth()} only clears the token, i.e. it
-does NOT imply that subsequent requests are made with an API key in lieu of a
-token.
+Clears any currently stored token. The next time gcalendr needs a token,
+the token acquisition process starts over, with a fresh call to
+\code{\link[=calendar_auth]{calendar_auth()}} and, therefore, internally, a call to
+\code{\link[gargle:token_fetch]{gargle::token_fetch()}}. Unlike some other packages that use gargle,
+gcalendr is not usable in a de-authorized state. Therefore, calling
+\code{calendar_deauth()} only clears the token, i.e. it does NOT imply that
+subsequent requests are made with an API key in lieu of a token.
 }
 \examples{
 \dontrun{

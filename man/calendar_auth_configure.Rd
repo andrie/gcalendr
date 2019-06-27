@@ -65,7 +65,7 @@ if (require(httr)) {
 
 \dontrun{
 # bring your own app via JSON downloaded from GCP Console
-bq_auth_configure(
+calendar_auth_configure(
   path = "/path/to/the/JSON/you/downloaded/from/gcp/console.json"
 )
 }

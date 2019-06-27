@@ -12,8 +12,6 @@ calendar_app <- function() {
 
 .auth <- gargle::init_AuthState(
   package     = "gcalendr",
-  app         = calendar_app(),     # YOUR PKG SHOULD USE ITS OWN APP!
-  api_key     = NULL, # YOUR PKG SHOULD USE ITS OWN KEY!
   auth_active = TRUE
 )
 
@@ -71,7 +69,7 @@ calendar_auth <- function(
 {
   cred <- gargle::token_fetch(
     scopes = scopes,
-    app = calendar_oauth_app(),
+    app = calendar_oauth_app() %||% calendar_app(),
     email = email,
     path = path,
     package = "gcalendr",
@@ -96,13 +94,7 @@ calendar_auth <- function(
 
 #' Clear current token
 #'
-#' Clears any currently stored token. The next time gcalendr needs a token, the
-#' token acquisition process starts over, with a fresh call to [calendar_auth()]
-#' and, therefore, internally, a call to [gargle::token_fetch()]. Unlike some
-#' other packages that use gargle, gcalendr is not usable in a de-authorized
-#' state. Therefore, calling `calendar_deauth()` only clears the token, i.e. it
-#' does NOT imply that subsequent requests are made with an API key in lieu of a
-#' token.
+#' @eval gargle:::PREFIX_deauth_description_no_api_key(gargle_lookup_table)
 #'
 #' @family auth functions
 #' @export
@@ -143,9 +135,8 @@ calendar_token <- function() {
 
 #' Is there a token on hand?
 #'
-#' Reports whether gcalendr has stored a token, ready for use in downstream
-#' requests. Exists mostly for protecting examples that won't work in the
-#' absence of a token.
+#' @eval gargle:::PREFIX_has_token_description(gargle_lookup_table)
+#' @eval gargle:::PREFIX_has_token_return()
 #'
 #' @return Logical.
 #' @export
@@ -191,7 +182,7 @@ calendar_has_token <- function() {
 #'
 #' \dontrun{
 #' # bring your own app via JSON downloaded from GCP Console
-#' bq_auth_configure(
+#' calendar_auth_configure(
 #'   path = "/path/to/the/JSON/you/downloaded/from/gcp/console.json"
 #' )
 #' }
@@ -215,13 +206,10 @@ calendar_oauth_app <- function() .auth$app
 
 #' Get info on current user
 #'
-#' Reveals the email address of the user associated with the current token. If
-#' no token has been loaded yet, this function does not initiate auth.
+#' @eval gargle:::PREFIX_user_description()
+#' @eval gargle:::PREFIX_user_seealso()
+#' @eval gargle:::PREFIX_user_return()
 #'
-#' @seealso [gargle::token_userinfo()], [gargle::token_email()],
-#'   [gargle::token_tokeninfo()]
-#'
-#' @return An email address or, if no token has been loaded, `NULL`.
 #' @export
 #' @examples
 #' \dontrun{
