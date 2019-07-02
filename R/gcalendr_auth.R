@@ -12,8 +12,6 @@ calendar_app <- function() {
 
 .auth <- gargle::init_AuthState(
   package     = "gcalendr",
-  app         = calendar_app(),     # YOUR PKG SHOULD USE ITS OWN APP!
-  api_key     = NULL, # YOUR PKG SHOULD USE ITS OWN KEY!
   auth_active = TRUE
 )
 
@@ -24,8 +22,7 @@ gargle_lookup_table <- list(
   YOUR_STUFF  = "your calendar events",
   PRODUCT     = "Google Calendar",
   API         = "Calendar API",
-  PREFIX      = "calendar",
-  AUTH_CONFIG_SOURCE = "gcalendr-package"
+  PREFIX      = "calendar"
 )
 
 #' Authorize gcalendr
@@ -63,7 +60,7 @@ gargle_lookup_table <- list(
 #' calendar_auth(path = "foofy-83ee9e7c9c48.json")
 #' }
 calendar_auth <- function(
-  email = NULL,
+  email = gargle::gargle_oauth_email(),
   path = NULL,
   scopes = "https://www.googleapis.com/auth/calendar.readonly",
   cache = gargle::gargle_oauth_cache(),
@@ -72,7 +69,7 @@ calendar_auth <- function(
 {
   cred <- gargle::token_fetch(
     scopes = scopes,
-    app = calendar_oauth_app(),
+    app = calendar_oauth_app() %||% calendar_app(),
     email = email,
     path = path,
     package = "gcalendr",
@@ -95,23 +92,18 @@ calendar_auth <- function(
   invisible()
 }
 
-#' Suspend authorization
+#' Clear current token
 #'
-#' @eval gargle:::PREFIX_deauth_description(gargle_lookup_table)
+#' @eval gargle:::PREFIX_deauth_description_no_api_key(gargle_lookup_table)
 #'
 #' @family auth functions
 #' @export
 #' @examples
 #' \dontrun{
 #' calendar_deauth()
-#' calendar_user()
-#' public_file <-
-#'   calendar_get(as_id("1Hj-k7NpPSyeOR3R7j4KuWnru6kZaqqOAE8_db5gowIM"))
-#' calendar_download(public_file)
 #' }
 calendar_deauth <- function() {
-  .auth$set_auth_active(FALSE)
-  .auth$set_cred(NULL)
+  .auth$clear_cred()
   invisible()
 }
 
@@ -143,9 +135,8 @@ calendar_token <- function() {
 
 #' Is there a token on hand?
 #'
-#' Reports whether gcalendr has stored a token, ready for use in downstream
-#' requests. Exists mostly for protecting examples that won't work in the
-#' absence of a token.
+#' @eval gargle:::PREFIX_has_token_description(gargle_lookup_table)
+#' @eval gargle:::PREFIX_has_token_return()
 #'
 #' @return Logical.
 #' @export
@@ -156,57 +147,78 @@ calendar_has_token <- function() {
   inherits(.auth$cred, "Token2.0")
 }
 
-#' View or edit auth config
+#' Edit and view auth configuration
 #'
-#' @eval gargle:::PREFIX_auth_config_description(gargle_lookup_table)
-#' @eval gargle:::PREFIX_auth_config_params_except_key(gargle_lookup_table)
+#' @eval gargle:::PREFIX_auth_configure_description(gargle_lookup_table, .has_api_key = FALSE)
+#' @eval gargle:::PREFIX_auth_configure_params(.has_api_key = FALSE)
+#' @eval gargle:::PREFIX_auth_configure_return(gargle_lookup_table, .has_api_key = FALSE)
 #'
 #' @family auth functions
 #' @export
 #' @examples
-#' ## this will print current config
-#' calendar_auth_config()
+#' # see the current user-configured OAuth app (probaby `NULL`)
+#' calendar_oauth_app()
 #'
-#' \dontrun{
 #' if (require(httr)) {
-#'   ## bring your own app via client id (aka key) and secret
+#'
+#'   # store current state, so we can restore
+#'   original_app <- calendar_oauth_app()
+#'
+#'   # bring your own app via client id (aka key) and secret
 #'   google_app <- httr::oauth_app(
 #'     "my-awesome-google-api-wrapping-package",
 #'     key = "123456789.apps.googleusercontent.com",
 #'     secret = "abcdefghijklmnopqrstuvwxyz"
 #'   )
-#'   calendar_auth_config(app = google_app)
+#'   calendar_auth_configure(app = google_app)
+#'
+#'   # confirm current app
+#'   calendar_oauth_app()
+#'
+#'   # restore original state
+#'   calendar_auth_configure(app = original_app)
+#'   calendar_oauth_app()
 #' }
 #'
-#' ## bring your own app via JSON downloaded from Google Developers Console
-#' calendar_auth_config(
-#'   path = "/path/to/the/JSON/you/downloaded/from/google/dev/console.json"
+#' \dontrun{
+#' # bring your own app via JSON downloaded from GCP Console
+#' calendar_auth_configure(
+#'   path = "/path/to/the/JSON/you/downloaded/from/gcp/console.json"
 #' )
 #' }
 #'
-calendar_auth_config <- function(
-  app = NULL,
-  path = NULL
-)
-{
-  stopifnot(is.null(app) || inherits(app, "oauth_app"))
-  stopifnot(is.null(path) || is_string(path))
-
-  if (!is.null(app) && !is.null(path)) {
-    stop_glue("Don't provide both 'app' and 'path'. Pick one.")
+calendar_auth_configure <- function(app, path) {
+  if (!xor(missing(app), missing(path))) {
+    stop("Must supply exactly one of `app` and `path`", call. = FALSE)
   }
-
-  if (is.null(app) && !is.null(path)) {
+  if (!missing(path)) {
+    stopifnot(is_string(path))
     app <- gargle::oauth_app_from_json(path)
   }
-  if (!is.null(app)) {
-    .auth$set_app(app)
-  }
+  stopifnot(is.null(app) || inherits(app, "oauth_app"))
 
-  .auth
+  .auth$set_app(app)
 }
 
-
 #' @export
-#' @rdname calendar_auth_config
+#' @rdname calendar_auth_configure
 calendar_oauth_app <- function() .auth$app
+
+#' Get info on current user
+#'
+#' @eval gargle:::PREFIX_user_description()
+#' @eval gargle:::PREFIX_user_seealso()
+#' @eval gargle:::PREFIX_user_return()
+#'
+#' @export
+#' @examples
+#' \dontrun{
+#' calendar_user()
+#' }
+calendar_user <- function() {
+  if (calendar_has_token()) {
+    gargle::token_email(calendar_token())
+  } else {
+    NULL
+  }
+}

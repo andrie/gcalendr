@@ -15,8 +15,9 @@ Returns a token pre-processed with \code{\link[httr:config]{httr::config()}}. Mo
 do not need to handle tokens "by hand" or, even if they need some
 control, \code{\link[=calendar_auth]{calendar_auth()}} is what they need. If there is no current
 token, \code{\link[=calendar_auth]{calendar_auth()}} is called to either load from cache or
-initiate OAuth2.0 flow. If auth has been deactivated via
-\code{\link[=calendar_auth_config]{calendar_auth_config()}}, \code{calendar_token()} returns \code{NULL}.
+initiate OAuth2.0 flow.
+If auth has been deactivated via \code{\link[=calendar_deauth]{calendar_deauth()}}, \code{calendar_token()}
+returns \code{NULL}.
 }
 \examples{
 \dontrun{
