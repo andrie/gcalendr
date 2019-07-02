@@ -30,7 +30,7 @@ Imports:
     httr,
     dplyr,
     lubridate,
-    gargle (>= 0.2.0.9004),
+    gargle (>= 0.2.0),
     tibble,
     glue
 Suggests: 
