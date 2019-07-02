@@ -24,18 +24,13 @@ stop_glue <- function (..., .sep = "", .envir = parent.frame(), call. = FALSE,
 #'   endpoint. Separates parameters into those destined for the body, the query,
 #'   and URL endpoint substitution (which is also enacted).
 #'
-#'   * Adds an API key to the query if and only if `token = NULL`.
-#'
 #' @param endpoint Character. Nickname for one of the selected Calendar v3 API
 #'   endpoints built into `gcalendr`. Learn more in [calendar_endpoints()].
 #'
 #' @param params Named list. Parameters destined for endpoint URL substitution,
 #'   the query, or the body.
 #'
-#'
-#' @param token Calendar token. Set to `NULL` to suppress the inclusion of a token.
-#'   Note that, if auth has been de-activated via [calendar_auth_config()],
-#'   `calendar_token()` will actually return `NULL`.
+#' @param token Calendar token.
 #'
 #' @return `list()`\cr Components are `method`, `path`, `query`, `body`,
 #'   `token`, and `url`, suitable as input for [request_make()].

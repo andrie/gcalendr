@@ -14,9 +14,7 @@ endpoints built into \code{gcalendr}. Learn more in \code{\link[=calendar_endpoi
 \item{params}{Named list. Parameters destined for endpoint URL substitution,
 the query, or the body.}
 
-\item{token}{Calendar token. Set to \code{NULL} to suppress the inclusion of a token.
-Note that, if auth has been de-activated via \code{\link[=calendar_auth_config]{calendar_auth_config()}},
-\code{calendar_token()} will actually return \code{NULL}.}
+\item{token}{Calendar token.}
 }
 \value{
 \code{list()}\cr Components are \code{method}, \code{path}, \code{query}, \code{body},
@@ -37,7 +35,6 @@ It takes a nickname for an endpoint and:
 \item Checks \code{params} for validity and completeness with respect to the
 endpoint. Separates parameters into those destined for the body, the query,
 and URL endpoint substitution (which is also enacted).
-\item Adds an API key to the query if and only if \code{token = NULL}.
 }
 }
 \examples{

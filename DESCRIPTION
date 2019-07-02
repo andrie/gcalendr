@@ -30,7 +30,7 @@ Imports:
     httr,
     dplyr,
     lubridate,
-    gargle,
+    gargle (>= 0.2.0),
     tibble,
     glue
 Suggests: 
@@ -45,3 +45,5 @@ Suggests:
 VignetteBuilder: rmarkdown
 RoxygenNote: 6.1.1
 Roxygen: list(markdown = TRUE)
+Remotes:
+    r-lib/gargle

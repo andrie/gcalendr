@@ -8,11 +8,12 @@ calendar_has_token()
 }
 \value{
 Logical.
+
+Logical.
 }
 \description{
 Reports whether gcalendr has stored a token, ready for use in downstream
-requests. Exists mostly for protecting examples that won't work in the
-absence of a token.
+requests.
 }
 \examples{
 calendar_has_token()
