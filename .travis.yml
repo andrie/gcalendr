@@ -43,7 +43,7 @@ matrix:
     - stage: "Deploy"
       r: release
       name: "Deploy gh-pages"
-      if: branch IN (master, travis) AND repo = rstudio/gcalendr AND type = push
+      if: branch IN (master, travis) AND repo = andrie/gcalendr AND type = push
       before_cache:
       - Rscript -e 'remotes::install_cran("pkgdown")'
       deploy:
