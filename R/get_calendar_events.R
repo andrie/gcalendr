@@ -1,5 +1,5 @@
 call_calendar_events <- function(id, token = calendar_token(), time_min, time_max, max_results = 250){
-  # api = "https://www.googleapis.com/calendar/v3/calendars"
+  # api = "https://developers.google.com/calendar/v3/reference/calendars"
 
   time_min <- strftime(time_min, tz = "UTC", "%Y-%m-%dT%H:%M:00Z")
   time_max <- strftime(time_max, tz = "UTC", "%Y-%m-%dT%H:%M:00Z")
@@ -15,7 +15,7 @@ call_calendar_events <- function(id, token = calendar_token(), time_min, time_ma
       singleEvents = TRUE
     )
   )
-  r <- request_make(req)
+  r <- gargle::request_make(req)
   httr::stop_for_status(r)
   r <- content(r)
 
