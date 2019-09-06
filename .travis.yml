@@ -40,15 +40,15 @@ matrix:
       r_build_args: --no-build-vignettes
       r_check_args: --ignore-vignettes --no-examples
 
-  - stage: "Deploy"
-    name: "Deploy gh-pages"
-    if: branch IN (master, travis) AND repo = rstudio/gcalendr AND type = push
-    r: release
-    before_cache:
-    - Rscript -e 'remotes::install_cran("pkgdown")'
-    deploy:
-      provider: script
-      script: Rscript -e 'pkgdown::deploy_site_github()'
-      skip_cleanup: true
+    - stage: "Deploy"
+      r: release
+      name: "Deploy gh-pages"
+      if: branch IN (master, travis) AND repo = rstudio/gcalendr AND type = push
+      before_cache:
+      - Rscript -e 'remotes::install_cran("pkgdown")'
+      deploy:
+        provider: script
+        script: Rscript -e 'pkgdown::deploy_site_github()'
+        skip_cleanup: true
 
 
