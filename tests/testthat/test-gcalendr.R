@@ -7,9 +7,9 @@ if (gargle:::secret_can_decrypt("gcalendr")) {
   test_that("Can read events", {
     my_cal_id <- "apdevries@gmail.com"
 
-    token <- gargle:::secret_read("gcalendr", "gmail-token")
-    token <- gargle::credentials_service_account(path = rawToChar(token))
-    calendar_auth("apdevries@gmail.com", path = rawToChar(token))
+    secret <- gargle:::secret_read("gcalendr", "gmail-token")
+    token <- gargle::credentials_service_account(path = rawToChar(secret))
+    calendar_auth("apdevries@gmail.com", path = token)
 
     expect_true(calendar_has_token())
 
