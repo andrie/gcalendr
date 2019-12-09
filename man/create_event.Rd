@@ -19,9 +19,9 @@ create_event(
 
 \item{description}{description of the event. This should be a character vector. Optional.}
 
-\item{start_time}{the event start time formatted "yyyy-mm-dd hh:mm:ss". Hours, minutes, sections, optional.}
+\item{start_time}{the event start time formatted "yyyy-mm-dd hh:mm:ss". Hours, minutes, seconds, optional.}
 
-\item{end_time}{the event start time formatted "yyyy-mm-dd hh:mm:ss". Hours, minutes, sections, optional.}
+\item{end_time}{the event start time formatted "yyyy-mm-dd hh:mm:ss". Hours, minutes, seconds, optional.}
 }
 \description{
 This function allows you to create a calendar event.

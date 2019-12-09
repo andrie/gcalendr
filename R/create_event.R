@@ -4,8 +4,8 @@
 #'
 #'
 #' @param id calendar id, obtained from [calendar_list()]
-#' @param start_time the event start time formatted "yyyy-mm-dd hh:mm:ss". Hours, minutes, sections, optional.
-#' @param end_time the event start time formatted "yyyy-mm-dd hh:mm:ss". Hours, minutes, sections, optional.
+#' @param start_time the event start time formatted "yyyy-mm-dd hh:mm:ss". Hours, minutes, seconds, optional.
+#' @param end_time the event start time formatted "yyyy-mm-dd hh:mm:ss". Hours, minutes, seconds, optional.
 #' @param attendees character vector of email addresses of event attendees. Optional.
 #' @param description description of the event. This should be a character vector. Optional.
 #' @importFrom lubridate ceiling_date minutes now
