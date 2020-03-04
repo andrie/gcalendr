@@ -3,6 +3,7 @@
 language: r
 cache: packages
 os: linux
+cran: https://demo.rstudiopm.com/cran/__linux__/xenial/latest
 
 addons:
   apt:
