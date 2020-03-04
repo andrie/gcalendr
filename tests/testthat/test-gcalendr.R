@@ -2,11 +2,10 @@ context("Read calendar events")
 
 if (Sys.getenv("GCALENDR_PASSWORD") != "" && gargle:::secret_can_decrypt("gcalendr")) {
   test_that("Can read events", {
-    my_cal_id <- "apdevries@gmail.com"
 
     secret <- gargle:::secret_read("gcalendr", "gmail-token")
     token <- gargle::credentials_service_account(path = rawToChar(secret))
-    calendar_auth(my_cal_id, path = token)
+    calendar_auth("apdevries@gmail.com", path = token, use_oob = TRUE)
 
     expect_true(calendar_has_token())
 
@@ -15,6 +14,7 @@ if (Sys.getenv("GCALENDR_PASSWORD") != "" && gargle:::secret_can_decrypt("gcalen
     expect_equal(ncol(calendar_ids), 3)
 
 
+    my_cal_id <- "apdevries@gmail.com"
     items <- call_calendar_events(my_cal_id,
                                   time_min = as.Date("2019-01-01") - 90,
                                   time_max = as.Date("2019-01-01") + 90
