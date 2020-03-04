@@ -16,6 +16,7 @@ Tibble with columns for \code{id}, \code{summary} and \code{description}.
 Get list of calendars from google.
 }
 \seealso{
-Other calendar functions: \code{\link{calendar_events}}
+Other calendar functions: 
+\code{\link{calendar_events}()}
 }
 \concept{calendar functions}

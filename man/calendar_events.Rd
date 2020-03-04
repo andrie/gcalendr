@@ -4,8 +4,14 @@
 \alias{calendar_events}
 \title{Retrieve google calendar events.}
 \usage{
-calendar_events(id, token = calendar_token(), days_in_past = 90,
-  days_in_future = 90, now = Sys.Date(), max_results = 250)
+calendar_events(
+  id,
+  token = calendar_token(),
+  days_in_past = 90,
+  days_in_future = 90,
+  now = Sys.Date(),
+  max_results = 250
+)
 }
 \arguments{
 \item{id}{calendar id, obtained from \code{\link[=calendar_list]{calendar_list()}}}
@@ -39,6 +45,7 @@ To unnest these columns, use \code{\link[tidyr:unnest]{tidyr::unnest()}}
 https://developers.google.com/google-apps/calendar/v3/reference/events/list
 }
 \seealso{
-Other calendar functions: \code{\link{calendar_list}}
+Other calendar functions: 
+\code{\link{calendar_list}()}
 }
 \concept{calendar functions}

@@ -4,8 +4,11 @@
 \alias{request_generate}
 \title{Build a request for the Google Calendar API}
 \usage{
-request_generate(endpoint = character(), params = list(),
-  token = calendar_token())
+request_generate(
+  endpoint = character(),
+  params = list(),
+  token = calendar_token()
+)
 }
 \arguments{
 \item{endpoint}{Character. Nickname for one of the selected Calendar v3 API
@@ -50,6 +53,7 @@ req
 \seealso{
 \code{\link[gargle:request_develop]{gargle::request_develop()}}, \code{\link[gargle:request_build]{gargle::request_build()}}
 
-Other low-level API functions: \code{\link{calendar_token}}
+Other low-level API functions: 
+\code{\link{calendar_token}()}
 }
 \concept{low-level API functions}

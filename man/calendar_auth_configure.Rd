@@ -72,7 +72,8 @@ calendar_auth_configure(
 
 }
 \seealso{
-Other auth functions: \code{\link{calendar_auth}},
-  \code{\link{calendar_deauth}}
+Other auth functions: 
+\code{\link{calendar_auth}()},
+\code{\link{calendar_deauth}()}
 }
 \concept{auth functions}

@@ -10,8 +10,14 @@ get_google_token(google_app)
 
 get_gcal_list(token = calendar_token())
 
-get_gcal_events(id, token = calendar_token(), days_in_past = 90,
-  days_in_future = 90, now = Sys.Date(), max_results = 250)
+get_gcal_events(
+  id,
+  token = calendar_token(),
+  days_in_past = 90,
+  days_in_future = 90,
+  now = Sys.Date(),
+  max_results = 250
+)
 }
 \arguments{
 \item{google_app}{No longer used}

@@ -4,10 +4,14 @@
 \alias{calendar_auth}
 \title{Authorize gcalendr}
 \usage{
-calendar_auth(email = gargle::gargle_oauth_email(), path = NULL,
+calendar_auth(
+  email = gargle::gargle_oauth_email(),
+  path = NULL,
   scopes = "https://www.googleapis.com/auth/calendar.readonly",
   cache = gargle::gargle_oauth_cache(),
-  use_oob = gargle::gargle_oob_default(), token = NULL)
+  use_oob = gargle::gargle_oob_default(),
+  token = NULL
+)
 }
 \arguments{
 \item{email}{Optional. Allows user to target a specific Google identity. If
@@ -54,10 +58,16 @@ wrapper around \code{\link[gargle:token_fetch]{gargle::token_fetch()}}.
 By default, you are directed to a web browser, asked to sign in to your
 Google account, and to grant gcalendr permission to operate on your
 behalf with Google Calendar. By default, these user credentials are cached in a
-folder below your home directory, \code{~/.R/gargle/gargle-oauth}, from where
+folder below your home directory, \verb{~/.R/gargle/gargle-oauth}, from where
 they can be automatically refreshed, as necessary. Storage at the user
 level means the same token can be used across multiple projects and
 tokens are less likely to be synced to the cloud by accident.
+
+If you are interacting with R from a web-based platform, like RStudio
+Server or Cloud, you need to use a variant of this flow, known as
+out-of-band auth ("oob"). If this does not happen automatically, you
+can request it yourself with \code{use_oob = TRUE} or, more persistently, by
+setting an option via \code{options(gargle_oob_default = TRUE)}.
 }
 \details{
 Most users, most of the time, do not need to call \code{calendar_auth()}
@@ -79,6 +89,7 @@ authentication.
 For details on the many ways to find a token, see
 \code{\link[gargle:token_fetch]{gargle::token_fetch()}}. For deeper control over auth, use
 \code{\link[=calendar_auth_configure]{calendar_auth_configure()}} to bring your own OAuth app or API key.
+Read more about gargle options, see \link[gargle:gargle_options]{gargle::gargle_options}.
 }
 \examples{
 \dontrun{
@@ -107,7 +118,8 @@ calendar_auth(path = "foofy-83ee9e7c9c48.json")
 }
 }
 \seealso{
-Other auth functions: \code{\link{calendar_auth_configure}},
-  \code{\link{calendar_deauth}}
+Other auth functions: 
+\code{\link{calendar_auth_configure}()},
+\code{\link{calendar_deauth}()}
 }
 \concept{auth functions}

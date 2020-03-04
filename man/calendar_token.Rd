@@ -30,6 +30,7 @@ req
 }
 }
 \seealso{
-Other low-level API functions: \code{\link{request_generate}}
+Other low-level API functions: 
+\code{\link{request_generate}()}
 }
 \concept{low-level API functions}
