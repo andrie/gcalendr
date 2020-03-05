@@ -36,6 +36,8 @@ Use this example to authenticate, list available calendars and view
 events:
 
 ``` r
+library(gcalendr)
+
 ## Set up google oauth permissions
 ## This will prompt you to specify an account
 calendar_auth()
