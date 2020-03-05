@@ -5,6 +5,8 @@
 
 <!-- badges: start -->
 
+[![R build
+status](https://github.com/andrie/gcalendr/workflows/R-CMD-check/badge.svg)](https://github.com/andrie/gcalendr/actions)
 [![Travis build
 status](https://travis-ci.org/andrie/gcalendr.svg?branch=master)](https://travis-ci.org/andrie/gcalendr)
 [![Lifecycle:
