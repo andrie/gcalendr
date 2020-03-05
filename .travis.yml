@@ -15,43 +15,35 @@ addons:
 jobs:
   include:
 
-    - stage: "Test"
-      r: release
-      r_build_args: --no-build-vignettes
-      r_check_args: --ignore-vignettes --no-examples
-      after_success:
-      - Rscript -e 'covr::codecov()'
-      - find . -name testthat.Rout | xargs cat
-      after_failure:
-      - find . -name testthat.Rout | xargs cat
+  - stage: "Test"
+    r: release
+    r_build_args: --no-build-vignettes
+    r_check_args: --ignore-vignettes --no-examples
+    after_success:
+    - Rscript -e 'covr::codecov()'
+    - find . -name testthat.Rout | xargs cat
+    after_failure:
+    - find . -name testthat.Rout | xargs cat
+    before_cache: Rscript -e 'remotes::install_cran("pkgdown")'
+    deploy:
+      provider: script
+      script: Rscript -e 'pkgdown::deploy_site_github()'
+      skip_cleanup: true
 
-    - stage: "Test"
-      name: "as CRAN"
-      r: release
-      env:
-        GCALENDR_PASSWORD=''
-        not_cran=false
+  - stage: "Test"
+    name: "as CRAN"
+    r: release
+    env:
+      GCALENDR_PASSWORD=''
+      not_cran=false
 
-    - stage: "Test"
-      r: devel
-      r_build_args: --no-build-vignettes
-      r_check_args: --ignore-vignettes --no-examples
+  - stage: "Test"
+    r: devel
+    r_build_args: --no-build-vignettes
+    r_check_args: --ignore-vignettes --no-examples
 
-    - stage: "Test"
-      r: oldrel
-      r_build_args: --no-build-vignettes
-      r_check_args: --ignore-vignettes --no-examples
-
-    - stage: "Deploy"
-      r: release
-      name: "Deploy gh-pages"
-      before_cache:
-      - Rscript -e 'remotes::install_cran("pkgdown")'
-      deploy:
-        provider: script
-        script: Rscript -e 'pkgdown::deploy_site_github()'
-        skip_cleanup: true
-        on:
-          branch: master
-
+  - stage: "Test"
+    r: oldrel
+    r_build_args: --no-build-vignettes
+    r_check_args: --ignore-vignettes --no-examples
 
