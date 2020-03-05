@@ -1,3 +1,4 @@
+
 if (gargle:::secret_can_decrypt("gcalendr")) {
   json <- gargle:::secret_read("gcalendr", "gcalendr-testing.json")
   calendar_auth(path = rawToChar(json))

@@ -1,5 +1,3 @@
-context("API endpoints")
-
 test_that("Can decode endpoints", {
   ep <- calendar_endpoints()
   expect_is(ep, "list")

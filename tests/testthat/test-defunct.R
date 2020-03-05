@@ -1,5 +1,3 @@
-context("Defunct functions")
-
 expect_defunct <- function(expr, message){
   z <- tryCatch(
     eval(expr),
