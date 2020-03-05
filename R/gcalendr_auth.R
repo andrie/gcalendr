@@ -4,9 +4,9 @@
 calendar_app <- function() {
   oauth_app(
     appname = 'gcalendr-package',
-    key = paste0("939459484985-fn7q750sdkpmi9a76jn8a1rtug84q5ss",
+    key = paste0("884898999172-rmbflsu5ce0f2fq8qus07ih3go5mih1d",
                  ".apps.googleusercontent.com"),
-    secret = "KDwAZXP4mlZUodY4vcKKfCE4"
+    secret = "WTk4MXues7D-rIAStaApMSa8"
   )
 }
 
