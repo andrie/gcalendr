@@ -17,6 +17,8 @@ jobs:
 
     - stage: "Test"
       r: release
+      r_build_args: --no-build-vignettes
+      r_check_args: --ignore-vignettes --no-examples
       after_success:
       - Rscript -e 'covr::codecov()'
       - find . -name testthat.Rout | xargs cat
@@ -24,31 +26,32 @@ jobs:
       - find . -name testthat.Rout | xargs cat
 
     - stage: "Test"
-      r: devel
-      env: GCALENDR_PASSWORD=''
-      r_build_args: --no-build-vignettes
-      r_check_args: --ignore-vignettes --no-examples
+      name: "as CRAN"
+      r: release
+      env:
+        GCALENDR_PASSWORD=''
+        not_cran=false
 
     - stage: "Test"
-      r: release
-      env: GCALENDR_PASSWORD=''
+      r: devel
       r_build_args: --no-build-vignettes
       r_check_args: --ignore-vignettes --no-examples
 
     - stage: "Test"
       r: oldrel
-      env: GCALENDR_PASSWORD=''
       r_build_args: --no-build-vignettes
       r_check_args: --ignore-vignettes --no-examples
 
     - stage: "Deploy"
       r: release
       name: "Deploy gh-pages"
-      if: branch IN (master, travis) AND repo = andrie/gcalendr AND type = push
       before_cache:
       - Rscript -e 'remotes::install_cran("pkgdown")'
       deploy:
         provider: script
         script: Rscript -e 'pkgdown::deploy_site_github()'
+        skip_cleanup: true
+        on:
+          branch: master
 
 
