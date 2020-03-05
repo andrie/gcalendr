@@ -6,6 +6,9 @@ test_that("Can read events", {
   expect_equal(ncol(calendar_ids), 3)
 
 
+  # JENNY QUESTION: I'm worried about this. The test should expect to be
+  # logged in as the service account. But maybe I just don't understand what
+  # this function does.
   my_cal_id <- "apdevries@gmail.com"
   items <- call_calendar_events(my_cal_id,
                                 time_min = as.Date("2019-01-01") - 90,
