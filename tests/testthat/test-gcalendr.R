@@ -1,11 +1,19 @@
 test_that("Can read events", {
   skip_if_no_token()
 
+if (Sys.getenv("GCALENDR_PASSWORD") != "" && gargle:::secret_can_decrypt("gcalendr")) {
+  test_that("Can read events", {
+    skip_on_cran()
   calendar_ids <- calendar_list()
   expect_is(calendar_ids, "data.frame")
   expect_equal(ncol(calendar_ids), 3)
 
+    service_account <- "gcalendr@gcalendr.iam.gserviceaccount.com"
 
+    secret <- rawToChar(gargle:::secret_read("gcalendr", "gmail-token.json"))
+    calendar_auth(service_account, path = secret)
+
+    expect_true(calendar_has_token())
   # JENNY QUESTION: I'm worried about this. The test should expect to be
   # logged in as the service account. But maybe I just don't understand what
   # this function does.
@@ -15,6 +23,10 @@ test_that("Can read events", {
                                 time_max = as.Date("2019-01-01") + 90
   )
 
+    calendar_ids <- calendar_list()
+
+    expect_is(calendar_ids, "data.frame")
+    expect_equal(ncol(calendar_ids), 3)
   expect_is(items, "list")
 
   events <- calendar_events(my_cal_id,
