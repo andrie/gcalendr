@@ -1,7 +1,7 @@
 Package: gcalendr
 Type: Package
 Title: Read Events From Google Calendar
-Version: 0.2.1.9003
+Version: 0.2.1.9004
 Authors@R: 
     c(person("Andrie", 
         "de Vries", 
@@ -12,11 +12,13 @@ Authors@R:
         email = "jenny@rstudio.com",
         comment = c(ORCID = "0000-0002-6983-2759", 
         "author of gargle package")),
+    person("RStudio", role = c("cph", "fnd")),
     person(given = "Google Inc",
         role = "cph",
-        comment = "Google Calendar API and discovery documents"))
+        comment = "Google Calendar API and discovery documents")
+    )
 Description: Read events from the Google Calendar API.
-Date: 2020-03-05
+Date: 2020-03-06
 License: MIT + file LICENSE
 URL: https://github.com/andrie/gcalendr
 BugReports: https://andrie.github.io/gcalendr/issues 
@@ -42,6 +44,6 @@ Suggests:
     withr,
     tidyr,
     sodium
-VignetteBuilder: rmarkdown
 RoxygenNote: 7.0.2
 Roxygen: list(markdown = TRUE)
+VignetteBuilder: knitr

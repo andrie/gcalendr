@@ -30,8 +30,8 @@ This packages is governed by common policies recorded here. This package uses in
 
 Your use of Google APIs with the `gcalendr` package is subject to the Google Calendar API 
 terms of service. See <https://developers.google.com/terms/>.
-  
-  
+
+
 # Privacy
 
 ## Google account and user data
@@ -50,23 +50,27 @@ There are two ways to use this package without authorizing the `gcalendr` packag
 
 ### Scopes
 
-Overview of the scopes requested by various `gcalendr` package and their rationale:
+At the moment the `gcalendr` package only provides read-only access to the API. Here is an overview of the scopes requested by the `gcalendr` package and their rationale:
 
-  * `userinfo.email` (read only): All OAuth tokens obtained with the `gcalendr` package request this scope so that cached tokens can be labelled with the associated Google user, allowing you to more easily access Google APIs with more than one identity. The `gcalendr` package do NOT have access to and do NOT store your Google password.
-  * BigQuery and Google Cloud Platform (read/write): The bigrquery package lets you upload, query, and modify data stored in Google BigQuery, as well as retrieve metadata about projects, datasets, tables, and jobs.
-  * Drive (read/write): The googledrive package allows you to manage your Drive files and therefore the default scopes include read/write access. The googledrive package makes it possible for you to get a token with more limited scope, e.g. read only.
-  * Gmail (read/write):  The gmailr package allows you to fully manage your Gmail account and therefore the default scope grants that ability. The gmailr package makes it possible for you to get a token with more limited scope, e.g. read or compose only.
-  * Sheets (read/write): The googlesheets4 package allows you to manage your spreadsheets and therefore the default scopes include read/write access. The googlesheets4 package makes it possible for you to get a token with more limited scope, e.g. read only.
+Scope |  Purpose
+----- | ----------
+[calendar.readonly](https://www.googleapis.com/auth/calendar.readonly)                    |	read-only access to Calendars
+[calendar.events](https://www.googleapis.com/auth/calendar.events)                        |	read-only access to Events
+[calendar.events.readonly](https://www.googleapis.com/auth/calendar.events.readonly)      |	read-only access to Events
+[calendar.settings.readonly](https://www.googleapis.com/auth/calendar.settings.readonly)  |	read-only access to Settings
+
 
 ### Sharing user data
 
 The packages only communicate with Google APIs. No user data is shared with the owners of the `gcalendr` package, RStudio, or any other servers.
+
 
 ### Storing user data
 
 This package may store your credentials on your local machine, for later reuse by you. **Use caution when using this package on a shared machine**.
 
 By default, an OAuth token is cached in a local file, such as `~/.R/gargle/gargle-oauth`. See the documentation for [`gargle::gargle_options()`](https://gargle.r-lib.org/reference/gargle_options.html) and [`gargle::credentials_user_oauth2()`](https://gargle.r-lib.org/reference/credentials_user_oauth2.html) for information on how to control the location of the token cache or suppress token caching, globally or at the individual token level.
+
 
 # Policies for authors of packages or other applications
 

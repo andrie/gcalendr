@@ -1,0 +1,87 @@
+---
+title: "Getting started with gcalendr"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Getting started with gcalendr}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup, message = FALSE}
+library(gcalendr)
+```
+
+## Quickstart ##
+
+This is a short document on getting up to speed with `gcalendr` quickly.
+
+## External Setup ##
+
+In order to use `gcalendr` you will need to create a google project for it. The
+easiest way to do this is via the 
+[Python Quickstart](https://developers.google.com/gmail/api/quickstart/python).
+
+* Click the `Enable the Gmail API` button.
+
+* In the resulting dialog click the `DOWNLOAD CLIENT CONFIGURATION` on your computer.
+
+* Tell `gcalendr` where the JSON lives, by doing one of the two things
+
+    1. Call `calendar_auth_configure(path = "path/to/downloaded/json")`
+  
+    2. Set the `gcalendr_APP` environment variable to the location of the JSON
+file, it is convenient to do this in your `.Renviron` file with
+`usethis::edit_r_environ()`. Then calling `calendar_auth_configure()` with no arguments.
+
+* Call `calendar_auth()` to start the OAuth flow to verify to google that you would
+like your `gcalendr` project to have access to your email. You will get a scary
+warning about an untrusted application, this is because the application is
+the one you just created, click advanced and `Go to gcalendr` to proceed to do
+the oauth flow.
+
+* If you want to authenticate with fewer scopes than the default use the
+`scopes` parameter to `calendar_auth()`. You can see a full list of available
+scopes from `calendar_scopes()`.
+
+Only very heavy usage of the Gmail API requires payment, so use of the API for most
+people should be free.
+
+If you use `usethis::edit_r_environ()` to set both `gcalendr_EMAIL` and
+`gcalendr_APP`, then once you have an oauth token you can simply run
+`calendar_auth_configure()` with no arguments at the top of the script to setup your
+application.
+
+
+## Example ##
+
+```{r eval=FALSE}
+library(gcalendr)
+
+## Set up google oauth permissions
+## This will prompt you to specify an account
+calendar_auth()
+
+```
+
+
+```{r eval=FALSE}
+## To specify a specific account, provide your account id, typically an email address
+calendar_auth("apdevries@gmail.com")
+
+## Retrieve tibble of available calenders
+calendar_ids <- calendar_list()
+calendar_ids
+
+## Retrieve tibble of events from a specific calendar
+
+my_cal_id <- "apdevries@gmail.com"
+events <- calendar_events(my_cal_id, days_in_past = 90, days_in_future = 90)
+events
+```
