@@ -1,6 +1,9 @@
 test_that("Can read events", {
   skip_if_no_token()
 
+  expect_is(calendar_user(), "character")
+  expect_is(calendar_app(), "oauth_app")
+
   calendar_ids <- calendar_list()
   expect_is(calendar_ids, "data.frame")
   expect_equal(ncol(calendar_ids), 3)

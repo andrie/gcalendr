@@ -17,4 +17,15 @@ test_that("Error on defunct", {
     get_google_token(),
     "Use 'calendar_token' instead."
   )
+
+  expect_defunct(
+    get_gcal_list(),
+    "Use 'calendar_list' instead."
+  )
+
+  expect_defunct(
+    get_gcal_events(),
+    "Use 'calendar_events' instead."
+  )
+
 })
