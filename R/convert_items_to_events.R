@@ -107,7 +107,7 @@ extract_simple_columns <- function(items){
       start_datetime             = .[["start"]][["dateTime"]] %||% NA,
       start_timezone             = .[["start"]][["timeZone"]] %||% NA,
 
-      end_date                   = .[["start"]][["date"]] %||% NA,
+      end_date                   = .[["end"]][["date"]] %||% NA,
       end_datetime               = .[["end"]][["dateTime"]] %||% NA,
       end_timezone               = .[["end"]][["timeZone"]] %||% NA,
 
