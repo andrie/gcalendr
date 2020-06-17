@@ -2,14 +2,15 @@
 % Please edit documentation in R/create_event.R
 \name{create_event}
 \alias{create_event}
-\title{Create a calendar event}
+\title{Create a Google calendar event}
 \usage{
 create_event(
   id,
   attendees,
   description,
-  start_time = ceiling_date(now(), "30minutes"),
-  end_time = start_time + minutes(30)
+  start_time,
+  end_time,
+  timezone = Sys.timezone()
 )
 }
 \arguments{
@@ -22,6 +23,8 @@ create_event(
 \item{start_time}{the event start time formatted "yyyy-mm-dd hh:mm:ss". Hours, minutes, seconds, optional.}
 
 \item{end_time}{the event start time formatted "yyyy-mm-dd hh:mm:ss". Hours, minutes, seconds, optional.}
+
+\item{timezone}{See \code{?timezones}.}
 }
 \description{
 This function allows you to create a calendar event.
