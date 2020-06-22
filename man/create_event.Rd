@@ -6,23 +6,26 @@
 \usage{
 create_event(
   id,
-  attendees,
+  title,
   description,
+  attendees,
   start_time,
-  end_time,
+  duration,
   timezone = Sys.timezone()
 )
 }
 \arguments{
 \item{id}{calendar id, obtained from \code{\link[=calendar_list]{calendar_list()}}}
 
-\item{attendees}{character vector of email addresses of event attendees. Optional.}
+\item{title}{Title of the event. Optional.}
 
 \item{description}{description of the event. This should be a character vector. Optional.}
 
+\item{attendees}{character vector of email addresses of event attendees. Optional.}
+
 \item{start_time}{the event start time formatted "yyyy-mm-dd hh:mm:ss". Hours, minutes, seconds, optional.}
 
-\item{end_time}{the event start time formatted "yyyy-mm-dd hh:mm:ss". Hours, minutes, seconds, optional.}
+\item{duration}{duration of calendar event in minutes. Optional.}
 
 \item{timezone}{See \code{?timezones}.}
 }
