@@ -10,10 +10,8 @@ calendar_app <- function() {
   )
 }
 
-.auth <- gargle::init_AuthState(
-  package     = "gcalendr",
-  auth_active = TRUE
-)
+# Initialized in .onLoad.
+.auth <- NULL
 
 # The roxygen comments for these functions are mostly generated from data
 # in this list and template text maintained in gargle.
