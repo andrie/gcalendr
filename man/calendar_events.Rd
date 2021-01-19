@@ -39,7 +39,7 @@ The resulting tibble has nested list columns for:
 \item \code{organizer}
 }
 
-To unnest these columns, use \code{\link[tidyr:unnest]{tidyr::unnest()}}
+To unnest these columns, use \code{\link[tidyr:nest]{tidyr::unnest()}}
 }
 \references{
 https://developers.google.com/google-apps/calendar/v3/reference/events/list
